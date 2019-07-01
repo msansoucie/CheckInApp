@@ -7,13 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D8A292922AE8AA500154ED7 /* VCRegisterDealer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8A292822AE8AA500154ED7 /* VCRegisterDealer.swift */; };
+		2D8A292B22AEB85F00154ED7 /* TVCBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8A292A22AEB85F00154ED7 /* TVCBody.swift */; };
 		2D94A8E122AA883A00DC0150 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D94A8E022AA883A00DC0150 /* AppDelegate.swift */; };
-		2D94A8E322AA883A00DC0150 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D94A8E222AA883A00DC0150 /* ViewController.swift */; };
+		2D94A8E322AA883A00DC0150 /* VCFindDealer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D94A8E222AA883A00DC0150 /* VCFindDealer.swift */; };
 		2D94A8E622AA883A00DC0150 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D94A8E422AA883A00DC0150 /* Main.storyboard */; };
 		2D94A8E822AA883A00DC0150 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D94A8E722AA883A00DC0150 /* Assets.xcassets */; };
 		2D94A8EB22AA883A00DC0150 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D94A8E922AA883A00DC0150 /* LaunchScreen.storyboard */; };
 		2D94A8F622AA883A00DC0150 /* AuctionCheckInTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D94A8F522AA883A00DC0150 /* AuctionCheckInTests.swift */; };
 		2D94A90122AA883A00DC0150 /* AuctionCheckInUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D94A90022AA883A00DC0150 /* AuctionCheckInUITests.swift */; };
+		2D94A90F22AA8EDE00DC0150 /* TVCDealer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D94A90E22AA8EDE00DC0150 /* TVCDealer.swift */; };
+		2D94A91122AAE74500DC0150 /* VCScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D94A91022AAE74500DC0150 /* VCScanner.swift */; };
+		2D94A91322AAFAF900DC0150 /* VCVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D94A91222AAFAF900DC0150 /* VCVehicle.swift */; };
+		2D952A0A22BA673700AAC687 /* DecodedVINObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D952A0922BA673700AAC687 /* DecodedVINObject.swift */; };
+		2DC5CCA622AFD4470069C9C0 /* VCCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC5CCA522AFD4470069C9C0 /* VCCamera.swift */; };
+		2DC5CCA822AFDF630069C9C0 /* VCPhotoPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC5CCA722AFDF630069C9C0 /* VCPhotoPreview.swift */; };
+		2DC5CCAA22AFF3140069C9C0 /* TVCLaneLot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC5CCA922AFF3140069C9C0 /* TVCLaneLot.swift */; };
+		2DD99B0622C3A58100ECE057 /* CheckInObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD99B0522C3A58100ECE057 /* CheckInObject.swift */; };
+		2DD99B0822C4F8EC00ECE057 /* LaneLotObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD99B0722C4F8EC00ECE057 /* LaneLotObject.swift */; };
+		2DD99B0A22C51AB500ECE057 /* VCPrintBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD99B0922C51AB500ECE057 /* VCPrintBarcode.swift */; };
+		2DEB185522CA431700DB5E7C /* testObjectC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEB185422CA431700DB5E7C /* testObjectC.m */; };
+		2DEB185922CA567B00DB5E7C /* libZSDK_API.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DEB185822CA567B00DB5E7C /* libZSDK_API.a */; };
+		2DF2D64A22B156A60021281D /* DealerInfoObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF2D64922B156A60021281D /* DealerInfoObject.swift */; };
+		2DF608BB22BD1D05008A1B2E /* VehicleClassObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF608BA22BD1D05008A1B2E /* VehicleClassObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,9 +50,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D8A292822AE8AA500154ED7 /* VCRegisterDealer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCRegisterDealer.swift; sourceTree = "<group>"; };
+		2D8A292A22AEB85F00154ED7 /* TVCBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVCBody.swift; sourceTree = "<group>"; };
 		2D94A8DD22AA883A00DC0150 /* AuctionCheckIn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuctionCheckIn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D94A8E022AA883A00DC0150 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2D94A8E222AA883A00DC0150 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2D94A8E222AA883A00DC0150 /* VCFindDealer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCFindDealer.swift; sourceTree = "<group>"; };
 		2D94A8E522AA883A00DC0150 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2D94A8E722AA883A00DC0150 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2D94A8EA22AA883A00DC0150 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +65,21 @@
 		2D94A8FC22AA883A00DC0150 /* AuctionCheckInUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AuctionCheckInUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D94A90022AA883A00DC0150 /* AuctionCheckInUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionCheckInUITests.swift; sourceTree = "<group>"; };
 		2D94A90222AA883A00DC0150 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2D94A90E22AA8EDE00DC0150 /* TVCDealer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVCDealer.swift; sourceTree = "<group>"; };
+		2D94A91022AAE74500DC0150 /* VCScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCScanner.swift; sourceTree = "<group>"; };
+		2D94A91222AAFAF900DC0150 /* VCVehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCVehicle.swift; sourceTree = "<group>"; };
+		2D952A0922BA673700AAC687 /* DecodedVINObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedVINObject.swift; sourceTree = "<group>"; };
+		2DC5CCA522AFD4470069C9C0 /* VCCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCCamera.swift; sourceTree = "<group>"; };
+		2DC5CCA722AFDF630069C9C0 /* VCPhotoPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCPhotoPreview.swift; sourceTree = "<group>"; };
+		2DC5CCA922AFF3140069C9C0 /* TVCLaneLot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVCLaneLot.swift; sourceTree = "<group>"; };
+		2DD99B0522C3A58100ECE057 /* CheckInObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInObject.swift; sourceTree = "<group>"; };
+		2DD99B0722C4F8EC00ECE057 /* LaneLotObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaneLotObject.swift; sourceTree = "<group>"; };
+		2DD99B0922C51AB500ECE057 /* VCPrintBarcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCPrintBarcode.swift; sourceTree = "<group>"; };
+		2DEB185322CA431700DB5E7C /* AuctionCheckIn-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AuctionCheckIn-Bridging-Header.h"; sourceTree = "<group>"; };
+		2DEB185422CA431700DB5E7C /* testObjectC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testObjectC.m; sourceTree = "<group>"; };
+		2DEB185822CA567B00DB5E7C /* libZSDK_API.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libZSDK_API.a; sourceTree = "<group>"; };
+		2DF2D64922B156A60021281D /* DealerInfoObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealerInfoObject.swift; sourceTree = "<group>"; };
+		2DF608BA22BD1D05008A1B2E /* VehicleClassObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleClassObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DEB185922CA567B00DB5E7C /* libZSDK_API.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +115,7 @@
 				2D94A8F422AA883A00DC0150 /* AuctionCheckInTests */,
 				2D94A8FF22AA883A00DC0150 /* AuctionCheckInUITests */,
 				2D94A8DE22AA883A00DC0150 /* Products */,
+				2DEB185822CA567B00DB5E7C /* libZSDK_API.a */,
 			);
 			sourceTree = "<group>";
 		};
@@ -98,11 +133,27 @@
 			isa = PBXGroup;
 			children = (
 				2D94A8E022AA883A00DC0150 /* AppDelegate.swift */,
-				2D94A8E222AA883A00DC0150 /* ViewController.swift */,
+				2D94A8E222AA883A00DC0150 /* VCFindDealer.swift */,
+				2D8A292822AE8AA500154ED7 /* VCRegisterDealer.swift */,
+				2D94A91022AAE74500DC0150 /* VCScanner.swift */,
+				2D94A91222AAFAF900DC0150 /* VCVehicle.swift */,
+				2DC5CCA522AFD4470069C9C0 /* VCCamera.swift */,
+				2DC5CCA722AFDF630069C9C0 /* VCPhotoPreview.swift */,
+				2DD99B0922C51AB500ECE057 /* VCPrintBarcode.swift */,
+				2DEB185422CA431700DB5E7C /* testObjectC.m */,
 				2D94A8E422AA883A00DC0150 /* Main.storyboard */,
+				2DF608BA22BD1D05008A1B2E /* VehicleClassObject.swift */,
+				2DD99B0722C4F8EC00ECE057 /* LaneLotObject.swift */,
+				2DD99B0522C3A58100ECE057 /* CheckInObject.swift */,
+				2DF2D64922B156A60021281D /* DealerInfoObject.swift */,
+				2D952A0922BA673700AAC687 /* DecodedVINObject.swift */,
+				2DC5CCA922AFF3140069C9C0 /* TVCLaneLot.swift */,
+				2D8A292A22AEB85F00154ED7 /* TVCBody.swift */,
+				2D94A90E22AA8EDE00DC0150 /* TVCDealer.swift */,
 				2D94A8E722AA883A00DC0150 /* Assets.xcassets */,
 				2D94A8E922AA883A00DC0150 /* LaunchScreen.storyboard */,
 				2D94A8EC22AA883A00DC0150 /* Info.plist */,
+				2DEB185322CA431700DB5E7C /* AuctionCheckIn-Bridging-Header.h */,
 			);
 			path = AuctionCheckIn;
 			sourceTree = "<group>";
@@ -193,6 +244,7 @@
 				TargetAttributes = {
 					2D94A8DC22AA883A00DC0150 = {
 						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1020;
 					};
 					2D94A8F022AA883A00DC0150 = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -256,8 +308,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D94A8E322AA883A00DC0150 /* ViewController.swift in Sources */,
+				2D8A292B22AEB85F00154ED7 /* TVCBody.swift in Sources */,
+				2D94A91322AAFAF900DC0150 /* VCVehicle.swift in Sources */,
+				2D94A90F22AA8EDE00DC0150 /* TVCDealer.swift in Sources */,
+				2DC5CCA622AFD4470069C9C0 /* VCCamera.swift in Sources */,
+				2DF2D64A22B156A60021281D /* DealerInfoObject.swift in Sources */,
+				2D94A91122AAE74500DC0150 /* VCScanner.swift in Sources */,
+				2D94A8E322AA883A00DC0150 /* VCFindDealer.swift in Sources */,
+				2D8A292922AE8AA500154ED7 /* VCRegisterDealer.swift in Sources */,
+				2DEB185522CA431700DB5E7C /* testObjectC.m in Sources */,
+				2DD99B0622C3A58100ECE057 /* CheckInObject.swift in Sources */,
 				2D94A8E122AA883A00DC0150 /* AppDelegate.swift in Sources */,
+				2D952A0A22BA673700AAC687 /* DecodedVINObject.swift in Sources */,
+				2DD99B0822C4F8EC00ECE057 /* LaneLotObject.swift in Sources */,
+				2DC5CCA822AFDF630069C9C0 /* VCPhotoPreview.swift in Sources */,
+				2DF608BB22BD1D05008A1B2E /* VehicleClassObject.swift in Sources */,
+				2DC5CCAA22AFF3140069C9C0 /* TVCLaneLot.swift in Sources */,
+				2DD99B0A22C51AB500ECE057 /* VCPrintBarcode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,17 +499,25 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7DHWKB9BN6;
+				HEADER_SEARCH_PATHS = /Applications/link_os_sdk/iOS/v1.5.1049/lib/include;
 				INFOPLIST_FILE = AuctionCheckIn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = matt.AuctionCheckIn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AuctionCheckIn/AuctionCheckIn-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -450,17 +525,24 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7DHWKB9BN6;
+				HEADER_SEARCH_PATHS = /Applications/link_os_sdk/iOS/v1.5.1049/lib/include;
 				INFOPLIST_FILE = AuctionCheckIn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = matt.AuctionCheckIn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AuctionCheckIn/AuctionCheckIn-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
