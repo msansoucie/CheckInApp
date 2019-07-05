@@ -28,6 +28,7 @@
 		2DD99B0A22C51AB500ECE057 /* VCPrintBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD99B0922C51AB500ECE057 /* VCPrintBarcode.swift */; };
 		2DEB185522CA431700DB5E7C /* testObjectC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEB185422CA431700DB5E7C /* testObjectC.m */; };
 		2DEB185922CA567B00DB5E7C /* libZSDK_API.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DEB185822CA567B00DB5E7C /* libZSDK_API.a */; };
+		2DEB185B22CCD7D000DB5E7C /* CustomeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEB185A22CCD7D000DB5E7C /* CustomeObject.m */; };
 		2DF2D64A22B156A60021281D /* DealerInfoObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF2D64922B156A60021281D /* DealerInfoObject.swift */; };
 		2DF608BB22BD1D05008A1B2E /* VehicleClassObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF608BA22BD1D05008A1B2E /* VehicleClassObject.swift */; };
 /* End PBXBuildFile section */
@@ -78,6 +79,8 @@
 		2DEB185322CA431700DB5E7C /* AuctionCheckIn-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AuctionCheckIn-Bridging-Header.h"; sourceTree = "<group>"; };
 		2DEB185422CA431700DB5E7C /* testObjectC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testObjectC.m; sourceTree = "<group>"; };
 		2DEB185822CA567B00DB5E7C /* libZSDK_API.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libZSDK_API.a; sourceTree = "<group>"; };
+		2DEB185A22CCD7D000DB5E7C /* CustomeObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomeObject.m; sourceTree = "<group>"; };
+		2DEB185C22CCD7F800DB5E7C /* CustomObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomObject.h; sourceTree = "<group>"; };
 		2DF2D64922B156A60021281D /* DealerInfoObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealerInfoObject.swift; sourceTree = "<group>"; };
 		2DF608BA22BD1D05008A1B2E /* VehicleClassObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleClassObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -140,7 +143,8 @@
 				2DC5CCA522AFD4470069C9C0 /* VCCamera.swift */,
 				2DC5CCA722AFDF630069C9C0 /* VCPhotoPreview.swift */,
 				2DD99B0922C51AB500ECE057 /* VCPrintBarcode.swift */,
-				2DEB185422CA431700DB5E7C /* testObjectC.m */,
+				2DEB185A22CCD7D000DB5E7C /* CustomeObject.m */,
+				2DEB185C22CCD7F800DB5E7C /* CustomObject.h */,
 				2D94A8E422AA883A00DC0150 /* Main.storyboard */,
 				2DF608BA22BD1D05008A1B2E /* VehicleClassObject.swift */,
 				2DD99B0722C4F8EC00ECE057 /* LaneLotObject.swift */,
@@ -150,6 +154,7 @@
 				2DC5CCA922AFF3140069C9C0 /* TVCLaneLot.swift */,
 				2D8A292A22AEB85F00154ED7 /* TVCBody.swift */,
 				2D94A90E22AA8EDE00DC0150 /* TVCDealer.swift */,
+				2DEB185422CA431700DB5E7C /* testObjectC.m */,
 				2D94A8E722AA883A00DC0150 /* Assets.xcassets */,
 				2D94A8E922AA883A00DC0150 /* LaunchScreen.storyboard */,
 				2D94A8EC22AA883A00DC0150 /* Info.plist */,
@@ -325,6 +330,7 @@
 				2DF608BB22BD1D05008A1B2E /* VehicleClassObject.swift in Sources */,
 				2DC5CCAA22AFF3140069C9C0 /* TVCLaneLot.swift in Sources */,
 				2DD99B0A22C51AB500ECE057 /* VCPrintBarcode.swift in Sources */,
+				2DEB185B22CCD7D000DB5E7C /* CustomeObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -330,9 +330,13 @@ class VCVehicle: UIViewController {
                                 self.bodyTypes.append(v.Series)
                             }
                             
-                            /*if self.bodyTypes.count == 2 {
-                                self.btnNEWSelectBody.titleLabel?.text = self.bodyTypes[1]
-                            }*/
+                            
+                            
+                            if self.bodyTypes.count == 2 {
+                                //self.btnNEWSelectBody.titleLabel?.text = self.bodyTypes[1]
+                                self.btnNEWSelectBody.setTitle(self.bodyTypes[1], for: .normal)
+                            }
+                            
                             self.tvBody.reloadData()
                         }
                     }

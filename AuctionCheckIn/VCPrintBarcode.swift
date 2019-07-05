@@ -7,6 +7,7 @@
 //
 
 import UIKit
+//import ExternalAccessory
 
 class VCPrintBarcode: UIViewController {
     
@@ -27,66 +28,73 @@ class VCPrintBarcode: UIViewController {
         
         lblTextVIN.text = vin
         
-        let printButton = UIBarButtonItem(title: "Print", style: .done, target: self, action: #selector(sendToPrinter))
+        let printButton = UIBarButtonItem(title: "Print", style: .done, target: self, action: #selector(testC))
         self.navigationItem.rightBarButtonItem = printButton
         navigationItem.rightBarButtonItem?.isEnabled = true
-        
         
         lblYearMiles.layer.borderWidth = 2.0
         
         lblYearMiles.lineBreakMode = NSLineBreakMode.byWordWrapping
         lblYearMiles.numberOfLines = 2
-        
-        /*print(year)
-        print(miles)
-        print(Int(miles)!.delimiter)*/
-        
+
         lblYearMiles.text = "\(year)\n\(Int(miles)!.delimiter) MI"
         barcodeImage = generateBarcode(from: barcodeVIN)!
         barcodeImageView.image = barcodeImage
         
-        sendToPrinterWithObjectC()
+    }
+
+    @objc func testC(){
+        let instanceOfCustomeObject: CustomObject = CustomObject()
+        instanceOfCustomeObject.someMethod()
+        //instanceOfCustomeObject.sendZplOverBluetooth()
+        instanceOfCustomeObject.image = self.view.toImage()
+        instanceOfCustomeObject.mileage = miles
+        instanceOfCustomeObject.year = year
+        
+        //^PQ2^XZ will print 2 copies
+        
+       
+        
+        instanceOfCustomeObject.label = "^XA ^FWR ^FO250,20^GB550,1180,4^FS    ^FO500,400^A0,200,200^FD\(year)^FS ^FO300,100^A0,200,200^FD\(Int(miles)?.delimiter ?? miles) MI^FS ^FO100,300 ^BY3 ^BCR,100,Y,N,N ^FD2CKDL43F086045757^FS ^PQ2 ^XZ"
+        //"^XA ^FWR ^FO300,20^GB500,1180,4^FS ^FO500,400^A0,300,250^FD\(year)^FS ^FO300,100^A0,300,250^FD\(Int(miles)?.delimiter ?? miles) MI^FS ^FO100, 50 ^BY5 ^BCR,100,Y,N,N ^FD2CKDL43F086045757^FS ^XZ"
+    
+ 
+        instanceOfCustomeObject.sampleWithGCD()
         
     }
     
-    
-    func sendToPrinterWithObjectC(){
-        let serial: String = ""
-        let connection: MfiBtPrinterConnection = MfiBtPrinterConnection(serialNumber: serial)
-        
-        connection.open()
-        
-        
-        if(connection.isConnected()) {
-            do {
-                //try SGD.SET("bluetooth.page_scan_window", withValue: "60", andWithPrinterConnection: connection)
-                
-                let  printer   =  try ZebraPrinterFactory.getInstance(connection)
-                
-                let lang =  printer.getControlLanguage()
-                
-                if(lang != PRINTER_LANGUAGE_CPCL){
-                    
-                    let tool = printer.getToolsUtil()
-                    
-                    
-                   try tool?.sendCommand("Test Print")
-                    //try  tool.sendCommand(dosya)
-                    
-                }
-                
-            } catch {
-                print(error)
+
+   /* func saveImage(){
+        print("Trying to save an image")
+        let image: UIImage? = self.view.toImage()
+        if !(image == nil) {
+            // get the documents directory url
+            let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+            let documentsDirectory = paths[0] // Get documents folder
+            let dataPath = URL(fileURLWithPath: documentsDirectory).appendingPathComponent("ImagesFolder").absoluteString //Set folder name
+            print(dataPath)
+            //Check is folder available or not, if not create
+            if !FileManager.default.fileExists(atPath: dataPath) {
+                try? FileManager.default.createDirectory(atPath: dataPath, withIntermediateDirectories: true, attributes: nil) //Create folder if not
             }
             
-            connection.close()
-            
-        }else{
-            print("IS NOT CONNECTED!")
-        }
-        
+            // create the destination file url to save your image
+            let fileURL = URL(fileURLWithPath:dataPath).appendingPathComponent("imageName.jpg")//Your image name
+            print("File URL: \(fileURL)")
+            //print(fileURL)
+            // get your UIImage jpeg data representation
+            let data = image?.jpegData(compressionQuality: 1.0)//Set image quality here
+            do {
+                print("Please Work")
 
-    }
+                // writes the image data to disk
+                try data?.write(to: fileURL, options: .atomic)
+            } catch {
+                print("error:", error)
+            }
+        }
+
+    }*/
     
     
     func generateBarcode(from string: String) -> UIImage? {
@@ -142,3 +150,6 @@ extension UIView {
         return image!
     }
 }
+
+
+

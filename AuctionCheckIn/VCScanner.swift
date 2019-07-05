@@ -265,7 +265,12 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             print("VIN has bad letters!!!\n\(testingVIN)")
             
             //let newvin = vin.stringByTrimmingCharactersInSet(badLetters)
-            let newV = testingVIN.replacingOccurrences(of: "I\\Q\\O\\-", with: "")
+            var newV = testingVIN.replacingOccurrences(of: "I", with: "")
+            newV = newV.replacingOccurrences(of: "O", with: "")
+            newV = newV.replacingOccurrences(of: "Q", with: "")
+            newV = newV.replacingOccurrences(of: "-", with: "")
+
+
             let newVIN = newV
             return newVIN
         }else{

@@ -8,3 +8,12 @@
 #import "ZebraPrinterFactory.h"
 #import "TcpPrinterConnection.h"
 #import "SGD.h"
+#import "CustomObject.h"
+#import <GraphicsUtil.h>
+
+//#import "testObjectC.h"
+
+
+/*@interface BlueToothClass : NSObject
+-(void)sendZplOverBluetooth;
+@end*/
