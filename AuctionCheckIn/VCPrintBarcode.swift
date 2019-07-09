@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreBluetooth
 //import ExternalAccessory
 
 class VCPrintBarcode: UIViewController {
@@ -55,7 +56,10 @@ class VCPrintBarcode: UIViewController {
         
        
         
-        instanceOfCustomeObject.label = "^XA ^FWR ^FO250,20^GB550,1180,4^FS    ^FO500,400^A0,200,200^FD\(year)^FS ^FO300,100^A0,200,200^FD\(Int(miles)?.delimiter ?? miles) MI^FS ^FO100,300 ^BY3 ^BCR,100,Y,N,N ^FD2CKDL43F086045757^FS ^PQ2 ^XZ"
+        instanceOfCustomeObject.label = "^XA ^FWR ^FO250,20^GB550,1180,4^FS    ^FO500,400^A0,200,200^FD\(year)^FS ^FO300,250^A0,200,200^FD\(Int(miles)?.delimiter ?? miles) MI^FS ^FO100,300 ^BY3 ^BCR,100,Y,N,N ^FD\(vin)^FS ^PQ2 ^XZ"
+        //"^XA^FWB^FO250,20^GB550,1180,4^FS^FO500,400^A0,200,200^FD2002 ^FS^FO300,100^A0,200,200^FD123,456 MI^FS^FO100,300^BY3^BCB,100,Y,N,N^FD2CKDL43F086045757^FS^XZ"
+        
+        //"^XA ^FWR ^FO250,20^GB550,1180,4^FS    ^FO500,400^A0,200,200^FD\(year)^FS ^FO300,100^A0,200,200^FD\(Int(miles)?.delimiter ?? miles) MI^FS ^FO100,300 ^BY3 ^BCR,100,Y,N,N ^FD2CKDL43F086045757^FS ^PQ2 ^XZ"
         //"^XA ^FWR ^FO300,20^GB500,1180,4^FS ^FO500,400^A0,300,250^FD\(year)^FS ^FO300,100^A0,300,250^FD\(Int(miles)?.delimiter ?? miles) MI^FS ^FO100, 50 ^BY5 ^BCR,100,Y,N,N ^FD2CKDL43F086045757^FS ^XZ"
     
  

@@ -26,6 +26,7 @@
 @property NSString *year;
 @property NSString *mileage;
 @property NSString *label;
+@property NSString *serialNumber;
 
 - (void) someMethod;
 

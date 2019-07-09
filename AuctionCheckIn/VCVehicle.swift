@@ -106,7 +106,56 @@ class VCVehicle: UIViewController {
         self.btnNEWSelectBody.titleLabel!.adjustsFontSizeToFitWidth = true
         
         txtvComments.layer.borderWidth = 1
+        
+        let printButton = UIBarButtonItem(title: "Print", style: .done, target: self, action: #selector(printTabButton))
+        self.navigationItem.rightBarButtonItem = printButton
+        navigationItem.rightBarButtonItem?.isEnabled = true
     }
+    
+    
+    @objc func printTabButton(){
+    
+        if txtYear.text == ""{
+            lblYearError.isHidden = false
+        }else{
+            lblYearError.isHidden = true
+        }
+        if txtMileage.text == "" {
+            lblMileageError.isHidden = false
+        }else{
+            lblMileageError.isHidden = true
+        }
+        if txtMake.text == "" {
+            lblMakeError.isHidden = false
+        }else{
+            lblMakeError.isHidden = true
+        }
+        if txtModel.text == "" {
+            lblModelError.isHidden = false
+        }else{
+            lblModelError.isHidden = true
+        }
+        if txtColor.text == "" {
+            lblColorError.isHidden = false
+        }else{
+            lblColorError.isHidden = true
+        }
+
+        if txtYear.text != "" && txtMileage.text != "" && txtMake.text != "" && txtModel.text != "" && txtColor.text != "" {//&& btnNEWSelectBody.titleLabel?.text != "Select Body"{
+            lblYearError.isHidden = true
+            lblMileageError.isHidden = true
+            lblMakeError.isHidden = true
+            lblModelError.isHidden = true
+            lblColorError.isHidden = true
+            lblBodyError.isHidden = true
+            
+            printLabel()
+        }
+        
+        setBody()
+    
+    }
+    
     
     //will setup the reservations
     func GetReservations(dealerID: String){
@@ -405,7 +454,8 @@ class VCVehicle: UIViewController {
         performSegue(withIdentifier: "toCamera", sender: nil)
     }
     
-    @IBAction func PrintSticker(_ sender: Any) {
+    
+    /*@IBAction func clickPrint(_ sender: Any) {
     
         if txtYear.text == ""{
             lblYearError.isHidden = false
@@ -448,10 +498,34 @@ class VCVehicle: UIViewController {
             lblModelError.isHidden = true
             lblColorError.isHidden = true
             lblBodyError.isHidden = true
-            performSegue(withIdentifier: "getCode", sender: nil)
+            
+            printLabel()
+            //performSegue(withIdentifier: "getCode", sender: nil)
         }
         
         setBody()
+    }*/
+    
+    func printLabel(){
+        let instanceOfCustomeObject: CustomObject = CustomObject()
+        instanceOfCustomeObject.someMethod()
+        //instanceOfCustomeObject.image = self.view.toImage()
+        //instanceOfCustomeObject.mileage = txtMileage.text
+        //instanceOfCustomeObject.year = txtYear.text
+        
+        //^PQ2^XZ will print 2 copies
+        
+        let y = txtYear.text
+        let m = txtMileage.text
+        
+        //creates the label ZPL string
+        instanceOfCustomeObject.label = "^XA ^FWR ^FO250,20^GB550,1180,4^FS ^FO500,400^A0,200,200^FD\(y!)^FS ^FO300,250^A0,200,200^FD\(Int(m!)?.delimiter ?? m!) MI^FS ^FO100,300 ^BY3 ^BCR,100,Y,N,N ^FD\(vin)^FS ^XZ"
+        //"^XA^FWB^FO250,20^GB550,1180,4^FS^FO500,400^A0,200,200^FD2002 ^FS^FO300,100^A0,200,200^FD123,456 MI^FS^FO100,300^BY3^BCB,100,Y,N,N^FD2CKDL43F086045757^FS^XZ"
+        //"^XA ^FWR ^FO250,20^GB550,1180,4^FS    ^FO500,400^A0,200,200^FD\(year)^FS ^FO300,100^A0,200,200^FD\(Int(miles)?.delimiter ?? miles) MI^FS ^FO100,300 ^BY3 ^BCR,100,Y,N,N ^FD2CKDL43F086045757^FS ^PQ2 ^XZ"
+        //"^XA ^FWR ^FO300,20^GB500,1180,4^FS ^FO500,400^A0,300,250^FD\(year)^FS ^FO300,100^A0,300,250^FD\(Int(miles)?.delimiter ?? miles) MI^FS ^FO100, 50 ^BY5 ^BCR,100,Y,N,N ^FD2CKDL43F086045757^FS ^XZ"
+        
+        //prints the label
+        instanceOfCustomeObject.sampleWithGCD()
     }
     
 
