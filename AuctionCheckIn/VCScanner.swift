@@ -188,7 +188,7 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                 if vin == ""{
                     print("Did not enter VIN")
                     
-                }else if vin.count != 17{//ALLOWED FOR SOME VEHICLES THAT MAYT HAVE MORE OR LESS, TESTING!!!
+                }else if vin.count != 17{//ALLOWED FOR SOME VEHICLES THAT MAY HAVE MORE OR LESS, TESTING!!!
                     print("VIN is missing or has too many characters")
                     self.KeepClassButtonSame()
                     self.cameFromManual = true
@@ -260,19 +260,23 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     func checkVIN(testingVIN: String) -> String{
         print(testingVIN)
-        if testingVIN.uppercased().contains("I") || testingVIN.uppercased().contains("O") || testingVIN.uppercased().contains("Q") || testingVIN.uppercased().contains("-"){
+        if testingVIN.uppercased().contains("I") || testingVIN.uppercased().contains("O") || testingVIN.uppercased().contains("Q") || testingVIN.uppercased().contains("-") || testingVIN.uppercased().contains("+") || testingVIN.uppercased().contains("<") || testingVIN.uppercased().contains(">") || testingVIN.uppercased().contains("!") || testingVIN.uppercased().contains(".") {
             
             print("VIN has bad letters!!!\n\(testingVIN)")
-            
             //let newvin = vin.stringByTrimmingCharactersInSet(badLetters)
             var newV = testingVIN.replacingOccurrences(of: "I", with: "")
             newV = newV.replacingOccurrences(of: "O", with: "")
             newV = newV.replacingOccurrences(of: "Q", with: "")
             newV = newV.replacingOccurrences(of: "-", with: "")
-
+            newV = newV.replacingOccurrences(of: "+", with: "")
+            newV = newV.replacingOccurrences(of: "<", with: "")
+            newV = newV.replacingOccurrences(of: ">", with: "")
+            newV = newV.replacingOccurrences(of: "!", with: "")
+            newV = newV.replacingOccurrences(of: ".", with: "")
 
             let newVIN = newV
             return newVIN
+            
         }else{
             print("VIN IS GOOD!!")
             return testingVIN
@@ -324,10 +328,6 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                 
                 previewLayerConnection.videoOrientation = o
                 
-                /*if o == .landscapeRight{
-                 print("right!!!")
-                 }*/
-                
                 video.frame = self.view.bounds
             }
         }
@@ -343,6 +343,7 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     
     func goToVeh(){
+        //preverts the scanner form creating multiple child VC's due to the camera capturing multiple shots of the barcode while scanning
         if count == 0 {
             //verifyVIN(vin: capturedVIN)
             performSegue(withIdentifier: "toVCVehicle", sender: nil)
@@ -360,7 +361,6 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     //let alert = UIAlertController(title: "code128 Code", message: object.stringValue, preferredStyle: .alert)
                     //alert.addAction(UIAlertAction(title: "Retake", style: .default, handler: nil))
                     //   alert.addAction(UIAlertAction(title: "Copy", style: .default, handler: { (nil) in UIPasteboard.general.string = object.stringValue
-                    
                    capturedVIN = object.stringValue!
                    goToVeh()
                     /*----------------------!!!!!HANDLE TRANSITION HERE!!!!!----------------------
@@ -374,126 +374,28 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     //present(alert, animated: true, completion: nil)
                 }
                 else if object.type == AVMetadataObject.ObjectType.qr {
-                   // let alert = UIAlertController(title: "QR Code", message: object.stringValue, preferredStyle: .alert)
-                    //alert.addAction(UIAlertAction(title: "Retake", style: .default, handler: nil))
-                    //   alert.addAction(UIAlertAction(title: "Copy", style: .default, handler: { (nil) in UIPasteboard.general.string = object.stringValue
-                    //   }))
-                    //   alert.addAction(UIAlertAction(title: "Copy", style: .default, handler: { (nil) in UIPasteboard.general.string = object.stringValue
                    capturedVIN = object.stringValue!
                    goToVeh()
-                    
-                   /*----------------------!!!!!HANDLE TRANSITION HERE!!!!!----------------------
-                    alert.addAction(UIAlertAction(title: "Copy Close", style: .destructive, handler: {
-                        _ in  if self.delegate != nil {
-                            self.delegate?.sendData(data:object.stringValue!)
-                            self.navigationController?.popViewController(animated: true)
-                            self.dismiss(animated: true, completion: nil)
-                        }}))*/
-                    //present(alert, animated: true, completion: nil)
-                    
                 }
                 else if object.type == AVMetadataObject.ObjectType.code39 {
-                    /*
-                     let alert = UIAlertController(title: "code39 VIN Scan", message: object.stringValue, preferredStyle: .alert)
-                     alert.addAction(UIAlertAction(title: "Retake", style: .default, handler: nil))
-                     //   alert.addAction(UIAlertAction(title: "Copy", style: .default, handler: { (nil) in UIPasteboard.general.string = object.stringValue
-                     alert.addAction(UIAlertAction(title: "Accept", style: .destructive, handler: {
-                     _ in  if self.delegate != nil {
-                     self.delegate?.sendData(data:object.stringValue!)
-                     self.navigationController?.popViewController(animated: true)
-                     self.dismiss(animated: true, completion: nil)
-                     }}))
-                     present(alert, animated: true, completion: nil)
-                     */
-                    
-                    //    VCScanner.showAlertMessage(message: object.stringValue!, viewController: self)
                     capturedVIN = object.stringValue!
                     goToVeh()
-                    /*----------------------!!!!!HANDLE TRANSITION HERE!!!!!----------------------
-                    self.delegate?.sendData(data:object.stringValue!)
-                    self.navigationController?.popViewController(animated: true)
-                    self.dismiss(animated: true, completion: nil)
-                    */
-                }//-----------------
+                }
                 else if object.type == AVMetadataObject.ObjectType.code93 {
-                    //let alert = UIAlertController(title: "code93 Code", message: object.stringValue, preferredStyle: .alert)
-                   // alert.addAction(UIAlertAction(title: "Retake", style: .default, handler: nil))
-                    //   alert.addAction(UIAlertAction(title: "Copy", style: .default, handler: { (nil) in UIPasteboard.general.string = object.stringValue
-                   
-                    /*----------------------!!!!!HANDLE TRANSITION HERE!!!!!----------------------
-                    alert.addAction(UIAlertAction(title: "Copy Close", style: .destructive, handler: {
-                        _ in  if self.delegate != nil {
-              
-                            self.delegate?.sendData(data:object.stringValue!)
-                            self.navigationController?.popViewController(animated: true)
-                            self.dismiss(animated: true, completion: nil)
-                            
-                        }}))*/
                     capturedVIN = object.stringValue!
                     goToVeh()
-                    //performSegue(withIdentifier: "toVCVehicle", sender: nil)
-                    //return
-                    //present(alert, animated: true, completion: nil)
-                    
                 }
                 else if object.type == AVMetadataObject.ObjectType.code39Mod43 {
-                    //let alert = UIAlertController(title: "code39Mod43 Code", message: object.stringValue, preferredStyle: .alert)
-                    //alert.addAction(UIAlertAction(title: "Retake", style: .default, handler: nil))
-                    //   alert.addAction(UIAlertAction(title: "Copy", style: .default, handler: { (nil) in UIPasteboard.general.string = object.stringValue
-                    
-                    
-                    /*----------------------!!!!!HANDLE TRANSITION HERE!!!!!----------------------
-                    alert.addAction(UIAlertAction(title: "Copy Close", style: .destructive, handler: {
-                        _ in  if self.delegate != nil {
-                            self.delegate?.sendData(data:object.stringValue!)
-                            self.navigationController?.popViewController(animated: true)
-                            self.dismiss(animated: true, completion: nil)
-                        }}))*/
                     capturedVIN = object.stringValue!
                     goToVeh()
-                    //performSegue(withIdentifier: "toVCVehicle", sender: nil)
-                    //return
-                    //present(alert, animated: true, completion: nil)
-                    
                 }
                 else if object.type == AVMetadataObject.ObjectType.ean13 {
-                   // let alert = UIAlertController(title: "ean13 Code", message: object.stringValue, preferredStyle: .alert)
-                    //alert.addAction(UIAlertAction(title: "Retake", style: .default, handler: nil))
-                    //   alert.addAction(UIAlertAction(title: "Copy", style: .default, handler: { (nil) in UIPasteboard.general.string = object.stringValue
-                   
-                    /*----------------------!!!!!HANDLE TRANSITION HERE!!!!!----------------------
-                    alert.addAction(UIAlertAction(title: "Copy Close", style: .destructive, handler: {
-                        _ in  if self.delegate != nil {
-                            self.delegate?.sendData(data:object.stringValue!)
-                            self.navigationController?.popViewController(animated: true)
-                            self.dismiss(animated: true, completion: nil)
-                        }}))*/
                     capturedVIN = object.stringValue!
                     goToVeh()
-                    //performSegue(withIdentifier: "toVCVehicle", sender: nil)
-                    //return
-                    //present(alert, animated: true, completion: nil)
-                    
                 }
                 else if object.type == AVMetadataObject.ObjectType.ean8 {
-                    //let alert = UIAlertController(title: "ean8 Code VIN", message: object.stringValue, preferredStyle: .alert)
-                   // alert.addAction(UIAlertAction(title: "Retake", style: .default, handler: nil))
-                    //   alert.addAction(UIAlertAction(title: "Copy", style: .default, handler: { (nil) in UIPasteboard.general.string = object.stringValue
-                    
-                   /*----------------------!!!!!HANDLE TRANSITION HERE!!!!!----------------------
-                    alert.addAction(UIAlertAction(title: "Accept", style: .destructive, handler: {
-                        _ in  if self.delegate != nil {
-                            self.delegate?.sendData(data:object.stringValue!)
-                            self.navigationController?.popViewController(animated: true)
-                            self.dismiss(animated: true, completion: nil)
-                        }
-                    }))*/
                     capturedVIN = object.stringValue!
                     goToVeh()
-                    //performSegue(withIdentifier: "toVCVehicle", sender: nil)
-                    //return
-                   // present(alert, animated: true, completion: nil)
-                    
                 }
                 
             }

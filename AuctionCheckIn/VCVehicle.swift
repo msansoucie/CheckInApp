@@ -36,21 +36,27 @@ class VCVehicle: UIViewController {
         var UVC: String
     }
     
-    struct ReservedLotsLanes: Decodable{
+    struct ReservedLotsLanes: Decodable {
         var vl:[laneLot]
     }
-    struct laneLot: Decodable{
-        var LaneLotID: String
+    struct laneLot: Decodable {
+        var LanelotID: String
         var LaneID: String
-        var DlrID: String
+        var DLrID: String
         var LaneLot: String
         var AucID: String
-        var saleDate: String
+        var SaleDate: String
         var LotID: String
+        
+        var vin: String
+        var make: String
+        var model: String
+        var yr: String
+        var lotmemo: String
     }
     
-    var bodyTypes = ["<NA>"]
-    var laneLots = ["Select Lane"]
+    var bodyTypes = ["Enter Body Manually"]
+    var laneLots = [String]()
     var colors = ["Black", "White", "Silver", "Blue", "Gray", "Green", "Brown", "Red"]
     
     var activeField: UITextField?
@@ -85,15 +91,14 @@ class VCVehicle: UIViewController {
     @IBOutlet weak var lblColorError: UILabel!
     @IBOutlet weak var lblMileageError: UILabel!
     @IBOutlet weak var lblBodyError: UILabel!
-    @IBOutlet weak var lblLaneErrror: UILabel!
+    @IBOutlet weak var lblLaneError: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         print("\(vin)")
+        
         verifyVIN(vin: vin)
-
-        GetReservations(dealerID: dealer!.DlrID)
         
         //hide the keyboard when the user clicks anywhere else
         self.hideKeyboardWhenTappedAround()
@@ -113,72 +118,90 @@ class VCVehicle: UIViewController {
     }
     
     
-    @objc func printTabButton(){
-    
+    func checkFieldEntry(btnClicked: String) -> Bool{
+        
+        var allFieldsChecked = true
+        
         if txtYear.text == ""{
             lblYearError.isHidden = false
+            allFieldsChecked = false
         }else{
             lblYearError.isHidden = true
         }
         if txtMileage.text == "" {
             lblMileageError.isHidden = false
+            allFieldsChecked = false
         }else{
             lblMileageError.isHidden = true
         }
         if txtMake.text == "" {
             lblMakeError.isHidden = false
+            allFieldsChecked = false
         }else{
             lblMakeError.isHidden = true
         }
         if txtModel.text == "" {
             lblModelError.isHidden = false
+            allFieldsChecked = false
         }else{
             lblModelError.isHidden = true
         }
         if txtColor.text == "" {
             lblColorError.isHidden = false
+            allFieldsChecked = false
         }else{
             lblColorError.isHidden = true
         }
-
-        if txtYear.text != "" && txtMileage.text != "" && txtMake.text != "" && txtModel.text != "" && txtColor.text != "" {//&& btnNEWSelectBody.titleLabel?.text != "Select Body"{
+        
+        if btnClicked == "save"{
+            if btnNEWSelectBody.title(for: .normal) == "Select Body"{
+                lblBodyError.isHidden = false
+                allFieldsChecked = false
+            }else{
+                lblBodyError.isHidden = true
+            }
+            if btnSelectLotLane.title(for: .normal) == "Select Lane" {
+                lblLaneError.isHidden = false
+                allFieldsChecked = false
+            }else{
+                lblLaneError.isHidden = true
+            }
+        }
+        
+        return allFieldsChecked
+        
+    
+    }
+    
+    @objc func printTabButton(){
+ 
+        let _ = checkFieldEntry(btnClicked: "print")
+        
+        if txtYear.text != "" && txtMileage.text != "" && txtMake.text != "" && txtModel.text != "" && txtColor.text != "" {//&& btnNEWSelectBody.title(for: .normal) != "Select Body" && btnSelectLotLane.title(for: .normal) != "Select Lane"{
             lblYearError.isHidden = true
             lblMileageError.isHidden = true
             lblMakeError.isHidden = true
             lblModelError.isHidden = true
             lblColorError.isHidden = true
             lblBodyError.isHidden = true
-            
+            lblLaneError.isHidden = true
             printLabel()
         }
-        
-        setBody()
-    
+
     }
     
     
     //will setup the reservations
     func GetReservations(dealerID: String){
         
-        print("DealerID: \(dealerID)")    
+        showSpinner(onView: self.view)
         
-        var test = [LaneLotObject]()
-        test.append(LaneLotObject(LaneLotID: "5854802", LaneID: "1", DlrID: "514253", LaneLot: "2019-06-06_1_1_1", AucID: "0", saleDate: "2019-06-06 00:00:00", LotID: "1"))
-        test.append(LaneLotObject(LaneLotID: "5854803", LaneID: "1", DlrID: "514253", LaneLot: "2019-06-06_1_1_2", AucID: "0", saleDate: "2019-06-06 00:00:00", LotID: "2"))
-        test.append(LaneLotObject(LaneLotID: "5854801", LaneID: "1", DlrID: "514253", LaneLot: "2019-06-06_1_1_36", AucID: "0", saleDate: "2019-06-06 00:00:00", LotID: "36"))
-        
-        for l in test {
-        laneLots.append("\(l.LaneID)-\(l.LotID)")
-        }
-        tvLaneLot.reloadData()
-
-       /* showSpinner(onView: self.view)
-        
-        let todoEndpoint: String = "https://mobiletest.aane.com/auction.asmx/VINDecode?"//requestSTR=\(vin)"
-        print(todoEndpoint)
-        
-        //empty the list
+        print("DealerID: \(dealerID)")
+     
         laneLots.removeAll()
+    
+        let todoEndpoint: String = "https://mobile.aane.com/auction.asmx/GetLaneLots?requestSTR=\(dealerID)"//requestSTR=\(vin)"
+       // print(todoEndpoint)
         
         guard let url = URL(string: todoEndpoint) else {
             print("ERROR: cannot create URL")
@@ -187,7 +210,7 @@ class VCVehicle: UIViewController {
         }
         
         var urlRequest = URLRequest(url: url)
-        //print(urlRequest)
+        print(urlRequest)
         
         urlRequest.addValue("text/xml", forHTTPHeaderField: "Content-Type")
         urlRequest.addValue("text/xml", forHTTPHeaderField: "Accept")
@@ -195,7 +218,7 @@ class VCVehicle: UIViewController {
         let session = URLSession.shared
         
         let task = session.dataTask(with: urlRequest){ data, response, error in
-            guard error == nil else{
+            guard error == nil else {
                 print("ERROR: calling GET: \(error!)")
                 self.removeSpinner()
                 return
@@ -203,11 +226,32 @@ class VCVehicle: UIViewController {
             
             guard let data = data else { print("DATA ERROR!!!"); return }
             do{
-                let l = try JSONDecoder().decode(ReservedLotsLanes.self, from: data)
+               
+                var availableCount = 0
+                var unAvailableCount = 0
+                
+                let lotlanes = try JSONDecoder().decode(ReservedLotsLanes.self, from: data)
                 
                 DispatchQueue.main.async {
-                    l.vl
+                
+                    for i in lotlanes.vl {
+                       // print("LaneLotID:\(i.LanelotID), DlrID:\(i.DLrID), LaneLot:\(i.LaneLot), AucID:\(i.AucID), SaleDate:\(i.SaleDate), LotID\(i.LotID), vin:\(i.vin), make:\(i.make), model:\(i.model), yr\(i.yr), lotmemo:\(i.lotmemo)")
+                        if i.vin == "" && i.make == "" && i.model == ""{
+                            
+                            self.laneLots.append("\(i.LaneID)-\(i.LotID)")
+                            availableCount = availableCount + 1
+                            
+                        }else {
+                            unAvailableCount = unAvailableCount + 1
+                        }
+                    }
+                    
+                    print("There are \(availableCount + unAvailableCount) spots reserved, with \(availableCount) available and \(unAvailableCount) occupied")
+                    self.tvLaneLot.reloadData()
+                    
                 }
+            
+                
             }catch let jsonErr{
                 print("-------------\(jsonErr) --------------")
                 self.removeSpinner()
@@ -220,29 +264,42 @@ class VCVehicle: UIViewController {
                 }
                 alert.addAction(okAction)
                 self.present(alert, animated: true, completion: nil)
-                
+                self.removeSpinner()
+
             }
+            self.removeSpinner()
             
         }
-        task.resume()*/
-
-        
-
+        task.resume()
+      
     }
     
     @IBAction func UploadVehicle(_ sender: Any) {
         
-        _ = self.dealer
-        _ = self.vin
-        _ = self.txtYear.text
-        _ = self.txtMake.text
-        _ = self.txtModel.text
-        _ = btnNEWSelectBody.titleLabel?.text
-        _ = btnSelectLotLane.titleLabel?.text
-        _ = txtvComments.text
+        if !checkFieldEntry(btnClicked: "save") {
+            print("NOT ALL FIELDS ARE IN!!!")
+        }else{
+            let sDealer = self.dealer!
+            let sVIN = self.vin
+            let sYear = self.txtYear.text?.trimmingCharacters(in: .whitespaces)
+            let sMake = self.txtMake.text?.trimmingCharacters(in: .whitespaces)
+            let sModel = self.txtModel.text?.trimmingCharacters(in: .whitespaces)
+            let sBody = btnNEWSelectBody?.titleLabel?.text!//.trimmingCharacters(in: .whitespaces)
+            let sLotLane = btnSelectLotLane.titleLabel?.text!
+            let sComments = txtvComments.text?.trimmingCharacters(in: .whitespaces)
         
+            print("(\(sDealer.DlrID))")
+            print("(\(sDealer.DlrName))")
+            print("(\(sVIN))")
+            print("(\(sYear!))")
+            print("(\(sMake!))")
+            print("(\(sModel))")
+            print("(\(sBody!))")
+            print("(\(sLotLane!))")
+            print("(\(String(describing: sComments)))")
+
         
-        
+            
         //var chosenVData: DecodedVINObject? = nil
         //for v in vList{
           //  if v.Series == btnSelectBody.titleLabel?.text{
@@ -254,19 +311,9 @@ class VCVehicle: UIViewController {
        // print("Uploaded Data\n Dealer: \(uploadData.Dealer.DlrName), laneLot: \(uploadData.laneLot), vin: \(uploadData.vin), vData \(uploadData.vData.), vType: \(uploadData.vType)")
             //CheckInObject(Dealer: self.dealer!, laneLot: "ENTER Lanelot Here", vin: self.vin, vdata: , vType: self.thisVehicleClass)
         
-        navigationController?.popToRootViewController(animated: true)
-    }
-    
-   /* func disablePageIfBad(){
-    
-        if isValid == false{
-            txtColor.isEnabled = false
-            txtYear.isEnabled = false
-            txtMake.isEnabled = false
-            txtModel.isEnabled = false
-            txtMileage.isEnabled = false
+            navigationController?.popToRootViewController(animated: true)
         }
-    }*/
+    }
     
 
     //MARK DECODE THE VIN
@@ -323,7 +370,7 @@ class VCVehicle: UIViewController {
                             self.present(alert, animated: true, completion: nil)
                         }else{
                             //self.isValid = true
-                            let alert = UIAlertController(title: "Manually Entry Required", message: "Valid VIN for this vehicle labeled \n \"\(self.thisVehicleClass!.VehClassDesc)\" \nfields must be entered manually", preferredStyle: .alert)
+                            let alert = UIAlertController(title: "Manually Entry Required", message: "Valid VIN for \n\(self.thisVehicleClass!.VehClassDesc) \nfields must be entered manually", preferredStyle: .alert)
                             //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
                             let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
                                 UIAlertAction in
@@ -337,7 +384,7 @@ class VCVehicle: UIViewController {
                         for v in vehicles.vl{
                           
                            // print("--------- Coming From Call ---------")
-                                print("ID: \(v.ID), VID: \(v.VID), Make: \(v.Make), Model: \(v.Model), Series: \(v.Series), Yr: \(v.Yr), UVC: \(v.UVC)")
+                            print("ID: \(v.ID), VID: \(v.VID), Make: \(v.Make), Model: \(v.Model), Series: \(v.Series), Yr: \(v.Yr), UVC: \(v.UVC)")
                             //print("--------- Coming From Call ---------")
                             
                             let vel = DecodedVINObject(ID: v.ID, VID: v.VID, Make: v.Make, Model: v.Model, Series: v.Series, Yr: v.Yr, UVC: v.UVC)
@@ -375,13 +422,15 @@ class VCVehicle: UIViewController {
                             self.txtMake.text = self.vList[0].Make
                             self.txtModel.text = self.vList[0].Model
                             
+                            //adds the different body types to the body table
                             for v in self.vList{
                                 self.bodyTypes.append(v.Series)
                             }
-                            
-                            
-                            
-                            if self.bodyTypes.count == 2 {
+                            //adds these values to the end of the list
+                            //self.bodyTypes.append("Enter Body Manually")
+                            self.bodyTypes.append("Unknown")
+
+                            if self.bodyTypes.count == 3 {
                                 //self.btnNEWSelectBody.titleLabel?.text = self.bodyTypes[1]
                                 self.btnNEWSelectBody.setTitle(self.bodyTypes[1], for: .normal)
                             }
@@ -416,20 +465,9 @@ class VCVehicle: UIViewController {
         self.navigationItem.title = "\(s): \(vin)"
         
         if counter != 0 {
-            setBody()
+            //setBody()
         }
         counter = counter + 1
-        /* if selectedBody != ""{
-            btnSelectBody.titleLabel?.text = selectedBody
-            print(selectedBody)
-        }*/
-        
-        /*
-        if selectedLane != "" {
-            btnSelectLotLane.titleLabel?.text = selectedLane
-        }*/
-        
-        
     }
     
     @IBAction func SelectBody(_ sender: Any) {
@@ -441,7 +479,12 @@ class VCVehicle: UIViewController {
     }
     
     @IBAction func SelectLane(_ sender: Any) {
+        
+        
         if tvLaneLot.isHidden{
+            if laneLots.isEmpty{
+                GetReservations(dealerID: dealer!.DlrID)
+            }
             tvLaneLot.isHidden = false
         }else{
             tvLaneLot.isHidden = true
@@ -449,93 +492,28 @@ class VCVehicle: UIViewController {
     }
     
     @IBAction func TakePhotos(_ sender: Any) {
-        //setBody()
-
         performSegue(withIdentifier: "toCamera", sender: nil)
     }
     
     
-    /*@IBAction func clickPrint(_ sender: Any) {
-    
-        if txtYear.text == ""{
-            lblYearError.isHidden = false
-        }else{
-            lblYearError.isHidden = true
-        }
-        if txtMileage.text == "" {
-            lblMileageError.isHidden = false
-        }else{
-            lblMileageError.isHidden = true
-        }
-        if txtMake.text == "" {
-            lblMakeError.isHidden = false
-        }else{
-            lblMakeError.isHidden = true
-        }
-        if txtModel.text == "" {
-            lblModelError.isHidden = false
-        }else{
-            lblModelError.isHidden = true
-        }
-        if txtColor.text == "" {
-            lblColorError.isHidden = false
-        }else{
-            lblColorError.isHidden = true
-        }
-        
-        // HTF is this affecting the button text?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!
-        /*if btnNEWSelectBody.titleLabel?.text == "Select Body" {   //"Select Body" {
-            lblBodyError.isHidden = false
-        }else{
-            lblBodyError.isHidden = true
-        }*/
-        
-        if txtYear.text != "" && txtMileage.text != "" && txtMake.text != "" && txtModel.text != "" && txtColor.text != "" {//&& btnNEWSelectBody.titleLabel?.text != "Select Body"{
-            
-            lblYearError.isHidden = true
-            lblMileageError.isHidden = true
-            lblMakeError.isHidden = true
-            lblModelError.isHidden = true
-            lblColorError.isHidden = true
-            lblBodyError.isHidden = true
-            
-            printLabel()
-            //performSegue(withIdentifier: "getCode", sender: nil)
-        }
-        
-        setBody()
-    }*/
     
     func printLabel(){
+        //create an instande of the Objective-C Class
         let instanceOfCustomeObject: CustomObject = CustomObject()
+        //test method
         instanceOfCustomeObject.someMethod()
-        //instanceOfCustomeObject.image = self.view.toImage()
-        //instanceOfCustomeObject.mileage = txtMileage.text
-        //instanceOfCustomeObject.year = txtYear.text
-        
-        //^PQ2^XZ will print 2 copies
-        
+        //create the values for the year and miles
         let y = txtYear.text
         let m = txtMileage.text
+        //create the lable in ZPL
+        instanceOfCustomeObject.label = "^XA ^FWR ^FO250,20 ^GB550,1180,4^FS    ^FO500,400 ^A0,200,200^FD\(y!)^FS     ^FO300,250 ^A0,200,200^FD\(Int(m!)?.delimiter ?? m!) MI^FS ^FO100,300 ^BY3 ^BCR,100,N,N,N ^FD\(vin)^FS    ^FO35,400 ^A0R,0,50 ^FD\(vin)^FS ^PQ2 ^XZ"
         
-        //creates the label ZPL string
-        instanceOfCustomeObject.label = "^XA ^FWR ^FO250,20^GB550,1180,4^FS ^FO500,400^A0,200,200^FD\(y!)^FS ^FO300,250^A0,200,200^FD\(Int(m!)?.delimiter ?? m!) MI^FS ^FO100,300 ^BY3 ^BCR,100,Y,N,N ^FD\(vin)^FS ^XZ"
-        //"^XA^FWB^FO250,20^GB550,1180,4^FS^FO500,400^A0,200,200^FD2002 ^FS^FO300,100^A0,200,200^FD123,456 MI^FS^FO100,300^BY3^BCB,100,Y,N,N^FD2CKDL43F086045757^FS^XZ"
-        //"^XA ^FWR ^FO250,20^GB550,1180,4^FS    ^FO500,400^A0,200,200^FD\(year)^FS ^FO300,100^A0,200,200^FD\(Int(miles)?.delimiter ?? miles) MI^FS ^FO100,300 ^BY3 ^BCR,100,Y,N,N ^FD2CKDL43F086045757^FS ^PQ2 ^XZ"
-        //"^XA ^FWR ^FO300,20^GB500,1180,4^FS ^FO500,400^A0,300,250^FD\(year)^FS ^FO300,100^A0,300,250^FD\(Int(miles)?.delimiter ?? miles) MI^FS ^FO100, 50 ^BY5 ^BCR,100,Y,N,N ^FD2CKDL43F086045757^FS ^XZ"
+        //"^XA ^FWR ^FO250,20^GB550,1180,4^FS ^FO500,400^A0,200,200^FD\(y!)^FS ^FO300,250^A0,200,200^FD\(Int(m!)?.delimiter ?? m!) MI^FS ^FO100,300 ^BY3 ^BCR,100,Y,N,N ^FD\(vin)^FS ^PQ2 ^XZ"
         
-        //prints the label
+        //prints the label through the method call with seapreate threading
         instanceOfCustomeObject.sampleWithGCD()
     }
-    
-
-    
-    func setBody(){
-       // if btnNEWSelectBody.titleLabel?.text != selectedBody{
-           // btnNEWSelectBody.titleLabel?.text = selectedBody
-      //  }
-    }
-    
+ 
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
        
         let uppercased = textField
@@ -560,6 +538,7 @@ class VCVehicle: UIViewController {
             let vc = segue.destination as! VCCamera
             vc.vin = self.vin
             vc.dealer = self.dealer
+        //Depreaciated!!!!!
         }else if segue.identifier == "getCode"{
             self.navigationItem.title = "Back"
             let vc = segue.destination as! VCPrintBarcode
@@ -567,26 +546,41 @@ class VCVehicle: UIViewController {
             vc.vin = self.vin
             vc.year = "\(self.txtYear.text!)"
             vc.miles = "\(self.txtMileage.text!)"
-            
         }
     }
     
     
     
+    func manualBodyEntry() {
+        var txtEnterBody: UITextField?
+        
+        txtEnterBody?.autocapitalizationType = .allCharacters
+        
+        let alert = UIAlertController(title: "Input Body", message: "Enter the body manually", preferredStyle: .alert)
+        
+        alert.addTextField {
+            text -> Void in
+            txtEnterBody = text
+            txtEnterBody?.placeholder = "Enter Body Here"
+        }
+        
+        let enterAction = UIAlertAction(title: "Enter", style: .default) { (action)  in
+            if txtEnterBody?.text != "" {
+                self.btnNEWSelectBody.setTitle(txtEnterBody?.text, for: .normal)
+            }
+            self.tvBody.isHidden = true
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action)  in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(enterAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
 }
 
-/*extension VCVehicle: UITextFieldDelegate{
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        activeField = textField
-        lastOffset = self.scrollView.contentOffset
-        return true
-    }
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        activeField?.resignFirstResponder()
-        activeField = nil
-        return true
-    }
-}*/
+
 
 extension VCVehicle: UITableViewDelegate, UITableViewDataSource{
     
@@ -620,11 +614,15 @@ extension VCVehicle: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == self.tvBody{
-            btnNEWSelectBody.titleLabel?.text = bodyTypes[indexPath.row]
-            //selectedBody = bodyTypes[indexPath.row]
-            tvBody.isHidden = true
+            
+            if bodyTypes[indexPath.row] == "Enter Body Manually"{
+                manualBodyEntry()
+            }else{
+                btnNEWSelectBody.setTitle(bodyTypes[indexPath.row], for: .normal)
+                tvBody.isHidden = true
+            }
         } else if tableView == self.tvLaneLot{
-            btnSelectLotLane.titleLabel?.text = laneLots[indexPath.row] 
+            btnSelectLotLane.setTitle(laneLots[indexPath.row], for: .normal)
             tvLaneLot.isHidden = true
         }
     }

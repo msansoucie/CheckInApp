@@ -37,6 +37,7 @@ class VCFindDealer: UIViewController { //, UITableViewDelegate, UITableViewDataS
         //self.hideKeyboardWhenTappedAround()
         
         getDealers()
+        myTableView.reloadData()
     }
 
     
@@ -78,7 +79,7 @@ class VCFindDealer: UIViewController { //, UITableViewDelegate, UITableViewDataS
                     
                     DispatchQueue.main.async {
                         if t.vl.isEmpty{
-                            print("No missing photos found")
+                            print("No Dealers Found")
                         }else{
                             var count = 0
                             for p in t.vl{
@@ -87,8 +88,10 @@ class VCFindDealer: UIViewController { //, UITableViewDelegate, UITableViewDataS
                                 //print("\(count): \(del.DlrName)\t\t ResCount: \(del.ResCount) \t\tInSale: \(del.InSale) \t\tInInv: \(del.InInv)")
                                 count = count + 1
                             }
+                            self.searchArray = self.dealerArray
+                            self.myTableView.reloadData()
                         }
-                        self.myTableView.reloadData()
+                        
                     }
                     self.removeSpinner()
                     
@@ -109,7 +112,6 @@ extension VCFindDealer: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         guard !searchText.isEmpty else {
             searchArray = dealerArray
             myTableView.reloadData()
@@ -135,6 +137,9 @@ extension VCFindDealer: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       
+        
+        
         let cell = myTableView.dequeueReusableCell(withIdentifier: "cell") as! TVCDealer
         cell.lblDealerName.text = searchArray[indexPath.row].DlrName
     
@@ -175,18 +180,11 @@ extension UIViewController{
             SpinnerView.addSubview(ai)
             onView.addSubview(SpinnerView)
         }
+        
         vSpinner = SpinnerView
         vSpinner?.bringSubviewToFront(onView)
         vSpinner?.isHidden = false
-        /*DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5) ){
-         if vSpinner != nil{
-         vSpinner?.removeFromSuperview()
-         vSpinner = nil
-         vSpinner?.isHidden = true
-         }else{
-         //do nothing, spinner already removed
-         }
-         }*/
+       
     }
     func removeSpinner(){
         DispatchQueue.main.async {

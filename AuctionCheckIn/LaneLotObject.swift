@@ -14,18 +14,29 @@ class LaneLotObject {
     var DlrID: String
     var LaneLot: String
     var AucID: String
-    var saleDate: String
+    var SaleDate: String
     var LotID: String
-   // var vin: String
-    //var make: String
+    var vin: String
+    var make: String
+    var model: String
+    var yr: String
+    var lotmemo: String
     
-    init(LaneLotID: String, LaneID: String, DlrID: String, LaneLot: String, AucID: String, saleDate: String, LotID: String){
+    //trimmingCharacters(in: .whitespaces)
+    
+    init(LaneLotID: String, LaneID: String, DlrID: String, LaneLot: String, AucID: String, SaleDate: String, LotID: String, vin: String, make: String, model: String, yr: String, lotmemo: String){
         self.LaneLotID = LaneLotID
         self.LaneID = LaneID
         self.DlrID = DlrID
         self.LaneLot = LaneLot
         self.AucID = AucID
-        self.saleDate = saleDate
+        self.SaleDate = SaleDate
         self.LotID = LotID
+        
+        self.vin = vin
+        self.make = make.trimmingCharacters(in: .whitespaces)
+        self.model = model.trimmingCharacters(in: .whitespaces)
+        self.yr = yr
+        self.lotmemo = lotmemo
     }
 }
