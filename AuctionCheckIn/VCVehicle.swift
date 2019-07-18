@@ -233,6 +233,8 @@ class VCVehicle: UIViewController {
                 let lotlanes = try JSONDecoder().decode(ReservedLotsLanes.self, from: data)
                 
                 DispatchQueue.main.async {
+                    
+                    self.laneLots.append("< ADD NEW RESERVATION >")
                 
                     for i in lotlanes.vl {
                        // print("LaneLotID:\(i.LanelotID), DlrID:\(i.DLrID), LaneLot:\(i.LaneLot), AucID:\(i.AucID), SaleDate:\(i.SaleDate), LotID\(i.LotID), vin:\(i.vin), make:\(i.make), model:\(i.model), yr\(i.yr), lotmemo:\(i.lotmemo)")
@@ -293,24 +295,11 @@ class VCVehicle: UIViewController {
             print("(\(sVIN))")
             print("(\(sYear!))")
             print("(\(sMake!))")
-            print("(\(sModel))")
+            print("(\(sModel!))")
             print("(\(sBody!))")
             print("(\(sLotLane!))")
             print("(\(String(describing: sComments)))")
-
-        
             
-        //var chosenVData: DecodedVINObject? = nil
-        //for v in vList{
-          //  if v.Series == btnSelectBody.titleLabel?.text{
-       //         chosenVData = v
-        //    }
-      //  }
-       // let uploadData = CheckInObject(Dealer: self.dealer!, laneLot: "ENTER Lanelot Here", vin: self.vin, vData: chosenVData!, vType: self.thisVehicleClass!)
-        
-       // print("Uploaded Data\n Dealer: \(uploadData.Dealer.DlrName), laneLot: \(uploadData.laneLot), vin: \(uploadData.vin), vData \(uploadData.vData.), vType: \(uploadData.vType)")
-            //CheckInObject(Dealer: self.dealer!, laneLot: "ENTER Lanelot Here", vin: self.vin, vdata: , vType: self.thisVehicleClass)
-        
             navigationController?.popToRootViewController(animated: true)
         }
     }
@@ -607,7 +596,7 @@ extension VCVehicle: UITableViewDelegate, UITableViewDataSource{
             return cell
         }else{
             let cell = tvLaneLot.dequeueReusableCell(withIdentifier: "lotlaneCell") as! TVCLaneLot
-            cell.lblLaneLot.text = "UNKNOWN ERROR!!!"
+            cell.lblLaneLot.text = "UNKNOWN ERROR!"
             return cell
         }
     }
@@ -622,8 +611,15 @@ extension VCVehicle: UITableViewDelegate, UITableViewDataSource{
                 tvBody.isHidden = true
             }
         } else if tableView == self.tvLaneLot{
-            btnSelectLotLane.setTitle(laneLots[indexPath.row], for: .normal)
-            tvLaneLot.isHidden = true
+            
+            if laneLots[indexPath.row] == "< ADD NEW RESERVATION >"{
+                btnSelectLotLane.setTitle(laneLots[indexPath.row], for: .normal)
+                tvLaneLot.isHidden = true
+            }else{
+                btnSelectLotLane.setTitle(laneLots[indexPath.row], for: .normal)
+                tvLaneLot.isHidden = true
+            }
+            
         }
     }
     

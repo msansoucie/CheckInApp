@@ -117,17 +117,16 @@ extension VCFindDealer: UISearchBarDelegate {
             myTableView.reloadData()
             return
         }
-        
         searchArray = dealerArray.filter({(item: DealerInfoObject) -> Bool in
             item.DlrName.lowercased().starts(with: searchText.lowercased())
         })
-        
         myTableView.reloadData()
     }
     
-    
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        
     }
+    
 }
 
 extension VCFindDealer: UITableViewDelegate, UITableViewDataSource {

@@ -73,7 +73,6 @@ class VCPrintBarcode: UIViewController {
                 return UIImage(ciImage: output)
             }
         }
-        
         return nil
     }
 

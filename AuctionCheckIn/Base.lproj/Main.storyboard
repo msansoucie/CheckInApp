@@ -58,6 +58,67 @@
             </objects>
             <point key="canvasLocation" x="2177.9296875" y="-230.46875"/>
         </scene>
+        <!--Select Lane-->
+        <scene sceneID="jxa-sa-RtF">
+            <objects>
+                <viewController id="aQi-JA-I6e" customClass="VCSelectLane" customModule="AuctionCheckIn" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LCb-fu-Hle">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="l6U-S2-kdm">
+                                <rect key="frame" x="0.0" y="70" width="1024" height="698"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectLaneCell" rowHeight="87" id="5Ia-E2-lVS" customClass="TVCSelectLane" customModule="AuctionCheckIn" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="1024" height="87"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5Ia-E2-lVS" id="Kj0-bR-DoO">
+                                            <rect key="frame" x="0.0" y="0.0" width="1024" height="86.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lane" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ly-UQ-Jad">
+                                                    <rect key="frame" x="10" y="9" width="1004" height="68.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="2Ly-UQ-Jad" firstAttribute="top" secondItem="Kj0-bR-DoO" secondAttribute="topMargin" constant="-2" id="0Du-Ep-GCo"/>
+                                                <constraint firstItem="2Ly-UQ-Jad" firstAttribute="leading" secondItem="Kj0-bR-DoO" secondAttribute="leadingMargin" constant="-5" id="HHC-D8-Pcb"/>
+                                                <constraint firstItem="2Ly-UQ-Jad" firstAttribute="centerX" secondItem="Kj0-bR-DoO" secondAttribute="centerX" id="N3g-Wt-0XU"/>
+                                                <constraint firstItem="2Ly-UQ-Jad" firstAttribute="centerY" secondItem="Kj0-bR-DoO" secondAttribute="centerY" id="f8H-uI-5eV"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="lblLane" destination="2Ly-UQ-Jad" id="JFL-gs-jaT"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="aQi-JA-I6e" id="9sS-nu-0Am"/>
+                                    <outlet property="delegate" destination="aQi-JA-I6e" id="GSu-xF-ukc"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="l6U-S2-kdm" firstAttribute="top" secondItem="LXC-kb-Cto" secondAttribute="top" id="Shs-K1-pch"/>
+                            <constraint firstItem="l6U-S2-kdm" firstAttribute="bottom" secondItem="LXC-kb-Cto" secondAttribute="bottom" id="gX5-ND-9sr"/>
+                            <constraint firstItem="l6U-S2-kdm" firstAttribute="leading" secondItem="LXC-kb-Cto" secondAttribute="leading" id="lRD-HE-UVb"/>
+                            <constraint firstItem="l6U-S2-kdm" firstAttribute="trailing" secondItem="LXC-kb-Cto" secondAttribute="trailing" id="p47-0v-7R8"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="LXC-kb-Cto"/>
+                    </view>
+                    <connections>
+                        <outlet property="TVLanes" destination="l6U-S2-kdm" id="KZC-Wq-3ub"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QyS-RY-OU3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2882.2265625" y="-1002.34375"/>
+        </scene>
         <!--Photo Preview-->
         <scene sceneID="aid-lb-H4T">
             <objects>
@@ -280,7 +341,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uy2-Nx-MNP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2839.453125" y="-1002.34375"/>
+            <point key="canvasLocation" x="2178" y="-1766"/>
         </scene>
         <!--Vehicle-->
         <scene sceneID="nC6-IF-TbM">
@@ -532,6 +593,7 @@
                         <outlet property="txtvComments" destination="mbO-53-PtI" id="IBm-VR-F15"/>
                         <segue destination="9Gc-Dc-iHn" kind="show" identifier="toCamera" id="rzw-Jf-j2F"/>
                         <segue destination="aqm-ZI-xvk" kind="show" identifier="getCode" id="2eC-I6-zKq"/>
+                        <segue destination="aQi-JA-I6e" kind="show" id="J7h-I9-qfm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BBi-nW-0xj" userLabel="First Responder" sceneMemberID="firstResponder"/>

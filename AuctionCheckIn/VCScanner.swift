@@ -25,8 +25,7 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var vehClassString: String = "Car / Truck"
     
     var txtEnterVIN: UITextField?
-   // var vList = [DecodedVINObject]()
-   
+    // var vList = [DecodedVINObject]()
     // var vehClassList = [VehicleClass](VehicleClass.init(VehClassID: "1", VehClassDesc: "Car / Truck", VehicleClassID: "1", aascsortid: "0"))
     
     var vehClassList: [VehicleClass] = [VehicleClass.init(VehClassID: "1", VehClassDesc: "Car / Truck", VehicleClassID: "1", aascsortid: "0"),VehicleClass.init(VehClassID: "2", VehClassDesc: "Motorhome", VehicleClassID: "1", aascsortid: "2"), VehicleClass.init(VehClassID: "3", VehClassDesc: "Boat", VehicleClassID: "1", aascsortid: "3"), VehicleClass.init(VehClassID: "4", VehClassDesc: "Motorcycle", VehicleClassID: "1", aascsortid: "4"), VehicleClass.init(VehClassID: "5", VehClassDesc: "Other", VehicleClassID: "1", aascsortid: "5"), VehicleClass.init(VehClassID: "6", VehClassDesc: "Oversized", VehicleClassID: "1", aascsortid: "") ]
