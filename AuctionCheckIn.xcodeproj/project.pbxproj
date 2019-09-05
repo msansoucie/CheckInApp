@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D11D24F22EF374200E51511 /* VCTakeDefaultMileagePic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D11D24E22EF374200E51511 /* VCTakeDefaultMileagePic.swift */; };
+		2D11D25122EF7EBD00E51511 /* VCViewImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D11D25022EF7EBD00E51511 /* VCViewImage.swift */; };
+		2D59D45C23143592004801E9 /* EquipmentObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D59D45B23143592004801E9 /* EquipmentObjects.swift */; };
+		2D59D45E23143801004801E9 /* VCEquipment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D59D45D23143801004801E9 /* VCEquipment.swift */; };
 		2D86568B22E0ACDF00A8EA1C /* VCSelectLane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D86568A22E0ACDF00A8EA1C /* VCSelectLane.swift */; };
 		2D86568D22E0B94F00A8EA1C /* TVCSelectLane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D86568C22E0B94F00A8EA1C /* TVCSelectLane.swift */; };
 		2D8A292922AE8AA500154ED7 /* VCRegisterDealer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8A292822AE8AA500154ED7 /* VCRegisterDealer.swift */; };
@@ -28,6 +32,8 @@
 		2DD99B0622C3A58100ECE057 /* CheckInObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD99B0522C3A58100ECE057 /* CheckInObject.swift */; };
 		2DD99B0822C4F8EC00ECE057 /* LaneLotObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD99B0722C4F8EC00ECE057 /* LaneLotObject.swift */; };
 		2DD99B0A22C51AB500ECE057 /* VCPrintBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD99B0922C51AB500ECE057 /* VCPrintBarcode.swift */; };
+		2DE2006723144ECA00FAADF0 /* VCEquipmentTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE2006623144ECA00FAADF0 /* VCEquipmentTypes.swift */; };
+		2DE200692314510500FAADF0 /* TVCEquipmentTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE200682314510500FAADF0 /* TVCEquipmentTypes.swift */; };
 		2DEB185522CA431700DB5E7C /* testObjectC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEB185422CA431700DB5E7C /* testObjectC.m */; };
 		2DEB185922CA567B00DB5E7C /* libZSDK_API.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DEB185822CA567B00DB5E7C /* libZSDK_API.a */; };
 		2DEB185B22CCD7D000DB5E7C /* CustomeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEB185A22CCD7D000DB5E7C /* CustomeObject.m */; };
@@ -53,6 +59,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D11D24E22EF374200E51511 /* VCTakeDefaultMileagePic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCTakeDefaultMileagePic.swift; sourceTree = "<group>"; };
+		2D11D25022EF7EBD00E51511 /* VCViewImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCViewImage.swift; sourceTree = "<group>"; };
+		2D59D45B23143592004801E9 /* EquipmentObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentObjects.swift; sourceTree = "<group>"; };
+		2D59D45D23143801004801E9 /* VCEquipment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCEquipment.swift; sourceTree = "<group>"; };
 		2D86568A22E0ACDF00A8EA1C /* VCSelectLane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCSelectLane.swift; sourceTree = "<group>"; };
 		2D86568C22E0B94F00A8EA1C /* TVCSelectLane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVCSelectLane.swift; sourceTree = "<group>"; };
 		2D8A292822AE8AA500154ED7 /* VCRegisterDealer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCRegisterDealer.swift; sourceTree = "<group>"; };
@@ -80,6 +90,8 @@
 		2DD99B0522C3A58100ECE057 /* CheckInObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInObject.swift; sourceTree = "<group>"; };
 		2DD99B0722C4F8EC00ECE057 /* LaneLotObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaneLotObject.swift; sourceTree = "<group>"; };
 		2DD99B0922C51AB500ECE057 /* VCPrintBarcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCPrintBarcode.swift; sourceTree = "<group>"; };
+		2DE2006623144ECA00FAADF0 /* VCEquipmentTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCEquipmentTypes.swift; sourceTree = "<group>"; };
+		2DE200682314510500FAADF0 /* TVCEquipmentTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVCEquipmentTypes.swift; sourceTree = "<group>"; };
 		2DEB185322CA431700DB5E7C /* AuctionCheckIn-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AuctionCheckIn-Bridging-Header.h"; sourceTree = "<group>"; };
 		2DEB185422CA431700DB5E7C /* testObjectC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testObjectC.m; sourceTree = "<group>"; };
 		2DEB185822CA567B00DB5E7C /* libZSDK_API.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libZSDK_API.a; sourceTree = "<group>"; };
@@ -145,8 +157,12 @@
 				2D94A91022AAE74500DC0150 /* VCScanner.swift */,
 				2D94A91222AAFAF900DC0150 /* VCVehicle.swift */,
 				2D86568A22E0ACDF00A8EA1C /* VCSelectLane.swift */,
-				2DC5CCA522AFD4470069C9C0 /* VCCamera.swift */,
-				2DC5CCA722AFDF630069C9C0 /* VCPhotoPreview.swift */,
+				2D11D24E22EF374200E51511 /* VCTakeDefaultMileagePic.swift */,
+				2D11D25022EF7EBD00E51511 /* VCViewImage.swift */,
+				2D59D45D23143801004801E9 /* VCEquipment.swift */,
+				2DE2006623144ECA00FAADF0 /* VCEquipmentTypes.swift */,
+				2D59D45B23143592004801E9 /* EquipmentObjects.swift */,
+				2DE200682314510500FAADF0 /* TVCEquipmentTypes.swift */,
 				2DD99B0922C51AB500ECE057 /* VCPrintBarcode.swift */,
 				2DEB185A22CCD7D000DB5E7C /* CustomeObject.m */,
 				2DEB185C22CCD7F800DB5E7C /* CustomObject.h */,
@@ -161,6 +177,8 @@
 				2D94A90E22AA8EDE00DC0150 /* TVCDealer.swift */,
 				2D86568C22E0B94F00A8EA1C /* TVCSelectLane.swift */,
 				2DEB185422CA431700DB5E7C /* testObjectC.m */,
+				2DC5CCA522AFD4470069C9C0 /* VCCamera.swift */,
+				2DC5CCA722AFDF630069C9C0 /* VCPhotoPreview.swift */,
 				2D94A8E722AA883A00DC0150 /* Assets.xcassets */,
 				2D94A8E922AA883A00DC0150 /* LaunchScreen.storyboard */,
 				2D94A8EC22AA883A00DC0150 /* Info.plist */,
@@ -321,7 +339,9 @@
 			files = (
 				2D8A292B22AEB85F00154ED7 /* TVCBody.swift in Sources */,
 				2D94A91322AAFAF900DC0150 /* VCVehicle.swift in Sources */,
+				2DE200692314510500FAADF0 /* TVCEquipmentTypes.swift in Sources */,
 				2D86568B22E0ACDF00A8EA1C /* VCSelectLane.swift in Sources */,
+				2D11D25122EF7EBD00E51511 /* VCViewImage.swift in Sources */,
 				2D86568D22E0B94F00A8EA1C /* TVCSelectLane.swift in Sources */,
 				2D94A90F22AA8EDE00DC0150 /* TVCDealer.swift in Sources */,
 				2DC5CCA622AFD4470069C9C0 /* VCCamera.swift in Sources */,
@@ -335,10 +355,14 @@
 				2D952A0A22BA673700AAC687 /* DecodedVINObject.swift in Sources */,
 				2DD99B0822C4F8EC00ECE057 /* LaneLotObject.swift in Sources */,
 				2DC5CCA822AFDF630069C9C0 /* VCPhotoPreview.swift in Sources */,
+				2D59D45C23143592004801E9 /* EquipmentObjects.swift in Sources */,
 				2DF608BB22BD1D05008A1B2E /* VehicleClassObject.swift in Sources */,
 				2DC5CCAA22AFF3140069C9C0 /* TVCLaneLot.swift in Sources */,
 				2DD99B0A22C51AB500ECE057 /* VCPrintBarcode.swift in Sources */,
+				2D59D45E23143801004801E9 /* VCEquipment.swift in Sources */,
 				2DEB185B22CCD7D000DB5E7C /* CustomeObject.m in Sources */,
+				2D11D24F22EF374200E51511 /* VCTakeDefaultMileagePic.swift in Sources */,
+				2DE2006723144ECA00FAADF0 /* VCEquipmentTypes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -172,7 +172,7 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
 
         txtEnterVIN?.autocapitalizationType = .allCharacters
         
-        let alert = UIAlertController(title: "VIN", message: "Enter The VIN Manually", preferredStyle: .alert)
+        let alert = UIAlertController(title: "\(vehClassString) VIN", message: "Enter The VIN Manually", preferredStyle: .alert)
         
         alert.addTextField {
             text -> Void in
@@ -252,7 +252,10 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                 }
             }
             
-            self.navigationController?.navigationBar.topItem?.title = "Rescan"
+            //self.navigationController?.navigationBar.topItem?.title = "Rescan"
+            let backItem = UIBarButtonItem()
+            backItem.title = "Rescan"
+            navigationItem.backBarButtonItem = backItem
         
         }
     }
@@ -396,7 +399,6 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     capturedVIN = object.stringValue!
                     goToVeh()
                 }
-                
             }
         }
     }

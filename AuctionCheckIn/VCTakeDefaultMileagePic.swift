@@ -1,24 +1,24 @@
 //
-//  VCCamera.swift
+//  VCTakeDefaultMillagePic.swift
 //  AuctionCheckIn
 //
-//  Created by Matthew Sansoucie on 6/11/19.
+//  Created by Matthew Sansoucie on 7/29/19.
 //  Copyright © 2019 Matthew Sansoucie. All rights reserved.
 //
 
 import UIKit
 import AVFoundation
 
-class VCCamera: UIViewController, URLSessionDelegate, URLSessionDataDelegate {
 
-    var vin: String = ""
-    var dealer: DealerInfoObject? = nil
+class VCTakeDefaultMileagePic: UIViewController, URLSessionDelegate, URLSessionDataDelegate {
+    
+    var delegate: UpdateImageProtocol?
     
     var captureSession = AVCaptureSession()
     var backCamera: AVCaptureDevice?
     var frontCamera: AVCaptureDevice?
     var currentCamera: AVCaptureDevice?
-
+    
     var portriatCamera: AVCaptureDevice?
     var landscapeCamera: AVCaptureDevice?
     
@@ -27,44 +27,48 @@ class VCCamera: UIViewController, URLSessionDelegate, URLSessionDataDelegate {
     var cameraPreviewLayer: AVCaptureVideoPreviewLayer?
     
     var image: UIImage?
- 
-    @IBOutlet weak var btnCamera: UIButton!
+    
+    var defaultOrMileage: String = ""
+
+    @IBOutlet weak var btnPhoto: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        btnCamera.layer.cornerRadius = 0.5 * btnCamera.bounds.size.width
+         btnPhoto.layer.cornerRadius = 0.5 * btnPhoto.bounds.size.width
         
+        print(defaultOrMileage)
+        
+        self.navigationController?.title = "\(defaultOrMileage) Photo"
+        
+      //  btnCamera.layer.cornerRadius = 0.5 * btnCamera.bounds.size.width
         setupCaptureSession()
         setupDevice()
         setupInputOutput()
         setupPreviewLayer()
         startRunningCapturSession()
-
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setCameraOrientation()
     }
-    
-    
-    //takes photo
+
     @IBAction func takePhoto(_ sender: Any) {
-        
         let settings = AVCapturePhotoSettings()
         photoOutput?.capturePhoto(with: settings, delegate: self)
-        
     }
     
+    //send iumage back to UIimageView in parent VC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toPhoto"{
+       /* if segue.identifier == "toPhoto"{
             let vc = segue.destination as! VCPhotoPreview
             vc.myImage = image
             
             //TRYING TO SAVE MEMORY SPACE
-           image = nil
-        }
+            image = nil
+        }*/
     }
     
     func rotateImage(image:UIImage) -> UIImage {
@@ -85,10 +89,11 @@ class VCCamera: UIViewController, URLSessionDelegate, URLSessionDataDelegate {
         }
         return rotatedImage
     }
+
 }
 
-//---------------------------------------AVFoundation------------------------------------------------
-extension VCCamera: AVCapturePhotoCaptureDelegate {
+extension VCTakeDefaultMileagePic: AVCapturePhotoCaptureDelegate {
+    
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if let imageData = photo.fileDataRepresentation(){
             //print("--------------------------------IMAGEDATA------------------------------------")
@@ -101,10 +106,17 @@ extension VCCamera: AVCapturePhotoCaptureDelegate {
                 image = rotateImage(image: image!)
             }
             
+            if defaultOrMileage == "Default"{
+                delegate?.getDefault(image: image!)
+            }else{
+                delegate?.getMileage(image: image!)
+            }
+            image = nil
+            navigationController?.popViewController(animated: true)
             
-            performSegue(withIdentifier: "toPhoto", sender: nil)
+            //performSegue(withIdentifier: "toPhoto", sender: nil)
             
-           // items.append(image!)
+            // items.append(image!)
             //myCollectionView.reloadData()
             //performSegue(withIdentifier: "showPhoto_Segue", sender: nil)
         }
@@ -186,35 +198,5 @@ extension VCCamera: AVCapturePhotoCaptureDelegate {
         setCameraOrientation()
     }
     
-}
-
-
-extension Data{
-    mutating func append(_ string: String, using encoding: String.Encoding = .utf8) {
-        if let data = string.data(using: encoding) {
-            append(data)
-        }
-    }
-}
-extension UIImage {
-    func rotate(radians: CGFloat) -> UIImage {
-        let rotatedSize = CGRect(origin: .zero, size: size)
-            .applying(CGAffineTransform(rotationAngle: CGFloat(radians)))
-            .integral.size
-        UIGraphicsBeginImageContext(rotatedSize)
-        if let context = UIGraphicsGetCurrentContext() {
-            let origin = CGPoint(x: rotatedSize.width / 2.0,
-                                 y: rotatedSize.height / 2.0)
-            context.translateBy(x: origin.x, y: origin.y)
-            context.rotate(by: radians)
-            draw(in: CGRect(x: -origin.y, y: -origin.x,
-                            width: size.width, height: size.height))
-            let rotatedImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            
-            return rotatedImage ?? self
-        }
-        
-        return self
-    }
+    
 }

@@ -22,6 +22,8 @@ class LaneLotObject {
     var yr: String
     var lotmemo: String
     
+    var vehicle: String
+    
     //trimmingCharacters(in: .whitespaces)
     
     init(LaneLotID: String, LaneID: String, DlrID: String, LaneLot: String, AucID: String, SaleDate: String, LotID: String, vin: String, make: String, model: String, yr: String, lotmemo: String){
@@ -38,5 +40,9 @@ class LaneLotObject {
         self.model = model.trimmingCharacters(in: .whitespaces)
         self.yr = yr
         self.lotmemo = lotmemo
+        
+        self.vehicle = "\(yr) \(make) \(model)"
     }
 }
+
+

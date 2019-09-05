@@ -47,7 +47,6 @@ class VCFindDealer: UIViewController { //, UITableViewDelegate, UITableViewDataS
     func getDealers(){
             showSpinner(onView: self.view)
             let todoEndpoint: String = "https://mobiletest.aane.com/auction.asmx/getReservationList?requestStr=0"
-            
             dealerArray.removeAll()
             
             guard let url = URL(string: todoEndpoint) else {
@@ -136,9 +135,6 @@ extension VCFindDealer: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
-        
-        
         let cell = myTableView.dequeueReusableCell(withIdentifier: "cell") as! TVCDealer
         cell.lblDealerName.text = searchArray[indexPath.row].DlrName
     
@@ -148,12 +144,14 @@ extension VCFindDealer: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         selectedIndex = indexPath.row
+         print(self.dealerArray[indexPath.row].DlrID)
         
         performSegue(withIdentifier: "toVCScanner", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toVCScanner"{
+           
             let vc = segue.destination as! VCScanner
             vc.dealer = searchArray[selectedIndex]
         }

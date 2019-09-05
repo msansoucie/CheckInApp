@@ -1,18 +1,18 @@
 //
-//  TVCLaneLot.swift
+//  TVCEquipmentTypes.swift
 //  AuctionCheckIn
 //
-//  Created by Matthew Sansoucie on 6/11/19.
+//  Created by Matthew Sansoucie on 8/26/19.
 //  Copyright © 2019 Matthew Sansoucie. All rights reserved.
 //
 
 import UIKit
 
-class TVCLaneLot: UITableViewCell {
-
-    @IBOutlet weak var lblLaneLot: UILabel!
-    @IBOutlet weak var lblAvailabilty: UILabel!
-    @IBOutlet weak var lblLaneLotID: UILabel!
+class TVCEquipmentTypes: UITableViewCell {
+  
+    
+    @IBOutlet weak var lblEquipmentTypes: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
