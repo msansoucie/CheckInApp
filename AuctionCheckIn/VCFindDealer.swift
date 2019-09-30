@@ -116,7 +116,7 @@ extension VCFindDealer: UISearchBarDelegate {
             myTableView.reloadData()
             return
         }
-        searchArray = dealerArray.filter({(item: DealerInfoObject) -> Bool in
+        searchArray = dealerArray.filter({(item: DealerInfoObject) -> Bool in 
             item.DlrName.lowercased().starts(with: searchText.lowercased())
         })
         myTableView.reloadData()

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2D11D24F22EF374200E51511 /* VCTakeDefaultMileagePic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D11D24E22EF374200E51511 /* VCTakeDefaultMileagePic.swift */; };
 		2D11D25122EF7EBD00E51511 /* VCViewImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D11D25022EF7EBD00E51511 /* VCViewImage.swift */; };
+		2D59CE78233562DC00BF9C6E /* VCGetInventoryNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D59CE77233562DC00BF9C6E /* VCGetInventoryNumbers.swift */; };
+		2D59CE7A233A6B0F00BF9C6E /* TVCInventoryLanesLots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D59CE79233A6B0F00BF9C6E /* TVCInventoryLanesLots.swift */; };
 		2D59D45C23143592004801E9 /* EquipmentObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D59D45B23143592004801E9 /* EquipmentObjects.swift */; };
 		2D59D45E23143801004801E9 /* VCEquipment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D59D45D23143801004801E9 /* VCEquipment.swift */; };
 		2D86568B22E0ACDF00A8EA1C /* VCSelectLane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D86568A22E0ACDF00A8EA1C /* VCSelectLane.swift */; };
@@ -61,6 +63,8 @@
 /* Begin PBXFileReference section */
 		2D11D24E22EF374200E51511 /* VCTakeDefaultMileagePic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCTakeDefaultMileagePic.swift; sourceTree = "<group>"; };
 		2D11D25022EF7EBD00E51511 /* VCViewImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCViewImage.swift; sourceTree = "<group>"; };
+		2D59CE77233562DC00BF9C6E /* VCGetInventoryNumbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCGetInventoryNumbers.swift; sourceTree = "<group>"; };
+		2D59CE79233A6B0F00BF9C6E /* TVCInventoryLanesLots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVCInventoryLanesLots.swift; sourceTree = "<group>"; };
 		2D59D45B23143592004801E9 /* EquipmentObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentObjects.swift; sourceTree = "<group>"; };
 		2D59D45D23143801004801E9 /* VCEquipment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCEquipment.swift; sourceTree = "<group>"; };
 		2D86568A22E0ACDF00A8EA1C /* VCSelectLane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCSelectLane.swift; sourceTree = "<group>"; };
@@ -161,6 +165,7 @@
 				2D11D25022EF7EBD00E51511 /* VCViewImage.swift */,
 				2D59D45D23143801004801E9 /* VCEquipment.swift */,
 				2DE2006623144ECA00FAADF0 /* VCEquipmentTypes.swift */,
+				2D59CE77233562DC00BF9C6E /* VCGetInventoryNumbers.swift */,
 				2D59D45B23143592004801E9 /* EquipmentObjects.swift */,
 				2DE200682314510500FAADF0 /* TVCEquipmentTypes.swift */,
 				2DD99B0922C51AB500ECE057 /* VCPrintBarcode.swift */,
@@ -172,6 +177,7 @@
 				2DD99B0522C3A58100ECE057 /* CheckInObject.swift */,
 				2DF2D64922B156A60021281D /* DealerInfoObject.swift */,
 				2D952A0922BA673700AAC687 /* DecodedVINObject.swift */,
+				2D59CE79233A6B0F00BF9C6E /* TVCInventoryLanesLots.swift */,
 				2DC5CCA922AFF3140069C9C0 /* TVCLaneLot.swift */,
 				2D8A292A22AEB85F00154ED7 /* TVCBody.swift */,
 				2D94A90E22AA8EDE00DC0150 /* TVCDealer.swift */,
@@ -344,6 +350,7 @@
 				2D11D25122EF7EBD00E51511 /* VCViewImage.swift in Sources */,
 				2D86568D22E0B94F00A8EA1C /* TVCSelectLane.swift in Sources */,
 				2D94A90F22AA8EDE00DC0150 /* TVCDealer.swift in Sources */,
+				2D59CE78233562DC00BF9C6E /* VCGetInventoryNumbers.swift in Sources */,
 				2DC5CCA622AFD4470069C9C0 /* VCCamera.swift in Sources */,
 				2DF2D64A22B156A60021281D /* DealerInfoObject.swift in Sources */,
 				2D94A91122AAE74500DC0150 /* VCScanner.swift in Sources */,
@@ -359,6 +366,7 @@
 				2DF608BB22BD1D05008A1B2E /* VehicleClassObject.swift in Sources */,
 				2DC5CCAA22AFF3140069C9C0 /* TVCLaneLot.swift in Sources */,
 				2DD99B0A22C51AB500ECE057 /* VCPrintBarcode.swift in Sources */,
+				2D59CE7A233A6B0F00BF9C6E /* TVCInventoryLanesLots.swift in Sources */,
 				2D59D45E23143801004801E9 /* VCEquipment.swift in Sources */,
 				2DEB185B22CCD7D000DB5E7C /* CustomeObject.m in Sources */,
 				2D11D24F22EF374200E51511 /* VCTakeDefaultMileagePic.swift in Sources */,

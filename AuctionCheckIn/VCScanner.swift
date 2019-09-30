@@ -184,10 +184,10 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         
         let enterAction = UIAlertAction(title: "Submit", style: .default) { (action)  in
             if let vin = self.txtEnterVIN?.text {
-                if vin == ""{
+                if vin == "" {
                     print("Did not enter VIN")
                     
-                }else if vin.count != 17{//ALLOWED FOR SOME VEHICLES THAT MAY HAVE MORE OR LESS, TESTING!!!
+                } else if vin.count != 17 {//ALLOWED FOR SOME VEHICLES THAT MAY HAVE MORE OR LESS, TESTING!!!
                     print("VIN is missing or has too many characters")
                     self.KeepClassButtonSame()
                     self.cameFromManual = true
