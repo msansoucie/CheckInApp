@@ -39,6 +39,9 @@
 		2DEB185522CA431700DB5E7C /* testObjectC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEB185422CA431700DB5E7C /* testObjectC.m */; };
 		2DEB185922CA567B00DB5E7C /* libZSDK_API.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DEB185822CA567B00DB5E7C /* libZSDK_API.a */; };
 		2DEB185B22CCD7D000DB5E7C /* CustomeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEB185A22CCD7D000DB5E7C /* CustomeObject.m */; };
+		2DEE6765235109280099B92A /* VCAdditionalPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE6764235109280099B92A /* VCAdditionalPhoto.swift */; };
+		2DEE67672355F92C0099B92A /* VCNewPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE67662355F92C0099B92A /* VCNewPhoto.swift */; };
+		2DEE676923576D080099B92A /* VCEditVIN6.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE676823576D080099B92A /* VCEditVIN6.swift */; };
 		2DF2D64A22B156A60021281D /* DealerInfoObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF2D64922B156A60021281D /* DealerInfoObject.swift */; };
 		2DF608BB22BD1D05008A1B2E /* VehicleClassObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF608BA22BD1D05008A1B2E /* VehicleClassObject.swift */; };
 /* End PBXBuildFile section */
@@ -101,6 +104,9 @@
 		2DEB185822CA567B00DB5E7C /* libZSDK_API.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libZSDK_API.a; sourceTree = "<group>"; };
 		2DEB185A22CCD7D000DB5E7C /* CustomeObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomeObject.m; sourceTree = "<group>"; };
 		2DEB185C22CCD7F800DB5E7C /* CustomObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomObject.h; sourceTree = "<group>"; };
+		2DEE6764235109280099B92A /* VCAdditionalPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCAdditionalPhoto.swift; sourceTree = "<group>"; };
+		2DEE67662355F92C0099B92A /* VCNewPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCNewPhoto.swift; sourceTree = "<group>"; };
+		2DEE676823576D080099B92A /* VCEditVIN6.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCEditVIN6.swift; sourceTree = "<group>"; };
 		2DF2D64922B156A60021281D /* DealerInfoObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealerInfoObject.swift; sourceTree = "<group>"; };
 		2DF608BA22BD1D05008A1B2E /* VehicleClassObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleClassObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -155,6 +161,9 @@
 		2D94A8DF22AA883A00DC0150 /* AuctionCheckIn */ = {
 			isa = PBXGroup;
 			children = (
+				2DEE676823576D080099B92A /* VCEditVIN6.swift */,
+				2DEE67662355F92C0099B92A /* VCNewPhoto.swift */,
+				2DEE6764235109280099B92A /* VCAdditionalPhoto.swift */,
 				2D94A8E022AA883A00DC0150 /* AppDelegate.swift */,
 				2D94A8E222AA883A00DC0150 /* VCFindDealer.swift */,
 				2D8A292822AE8AA500154ED7 /* VCRegisterDealer.swift */,
@@ -353,13 +362,16 @@
 				2D59CE78233562DC00BF9C6E /* VCGetInventoryNumbers.swift in Sources */,
 				2DC5CCA622AFD4470069C9C0 /* VCCamera.swift in Sources */,
 				2DF2D64A22B156A60021281D /* DealerInfoObject.swift in Sources */,
+				2DEE67672355F92C0099B92A /* VCNewPhoto.swift in Sources */,
 				2D94A91122AAE74500DC0150 /* VCScanner.swift in Sources */,
 				2D94A8E322AA883A00DC0150 /* VCFindDealer.swift in Sources */,
 				2D8A292922AE8AA500154ED7 /* VCRegisterDealer.swift in Sources */,
+				2DEE6765235109280099B92A /* VCAdditionalPhoto.swift in Sources */,
 				2DEB185522CA431700DB5E7C /* testObjectC.m in Sources */,
 				2DD99B0622C3A58100ECE057 /* CheckInObject.swift in Sources */,
 				2D94A8E122AA883A00DC0150 /* AppDelegate.swift in Sources */,
 				2D952A0A22BA673700AAC687 /* DecodedVINObject.swift in Sources */,
+				2DEE676923576D080099B92A /* VCEditVIN6.swift in Sources */,
 				2DD99B0822C4F8EC00ECE057 /* LaneLotObject.swift in Sources */,
 				2DC5CCA822AFDF630069C9C0 /* VCPhotoPreview.swift in Sources */,
 				2D59D45C23143592004801E9 /* EquipmentObjects.swift in Sources */,

@@ -11,6 +11,7 @@ import UIKit
 class TVCInventoryLanesLots: UITableViewCell {
 
     @IBOutlet weak var lblInventoryNumberLaneLotHolder: UILabel!
+    @IBOutlet weak var lblVehicleData: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

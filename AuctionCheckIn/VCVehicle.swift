@@ -23,6 +23,7 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
     var equipmentList=[EquipmentCodes]()
     
     var counter = 0
+    var Odomcount = 0
     
     //variables for the vin, dealer and vehicles class
     var vin: String = ""
@@ -38,6 +39,10 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
     var lanelotID: String = "0"
     
     var ISONPROPERITY: Bool = false
+    
+    var addingInvReservation: Bool = false
+    
+    var crORolPhoto: String = "CR"
     
     
     //jason for the list of possible vehicle types
@@ -144,7 +149,11 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
     
     @IBOutlet weak var txtStockNumber: UITextField!
     
-
+    
+    @IBOutlet weak var btnOLPhoto: UIButton!
+    @IBOutlet weak var btnCRPhoto: UIButton!
+    @IBOutlet weak var btnChangeDealer: UIButton!
+    
     
     var defaultImage = UIImage(named: "default")
     var millageImage = UIImage(named: "millage")
@@ -198,6 +207,9 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
     
     
     @IBAction func addInventoryRes(_ sender: Any) {
+        tvLaneLot.isHidden = true
+        laneLots.removeAll()
+        
         performSegue(withIdentifier: "pullINVs", sender: nil)
     }
     
@@ -261,7 +273,7 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
         
         var allFieldsChecked = true
         
-        if txtYear.text == ""{
+        if txtYear.text == "" {
             lblYearError.isHidden = false
             allFieldsChecked = false
         }else{
@@ -293,7 +305,7 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
         }
      
         
-        if btnClicked == "save"{
+        if btnClicked == "save" {
             if btnNEWSelectBody.title(for: .normal) == "Select Body"{
                 lblBodyError.isHidden = false
                 allFieldsChecked = false
@@ -306,18 +318,23 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
             }else{
                 lblLaneError.isHidden = true
             }
-            /*if UIIVDefault.image == nil {
-                lblDefaultError.isHidden = false
-                allFieldsChecked = false
-            }else{
-                lblDefaultError.isHidden = true
+            
+            
+            if ISONPROPERITY == false {
+                if UIIVDefault.image == nil {
+                    lblDefaultError.isHidden = false
+                    allFieldsChecked = false
+                }else{
+                    lblDefaultError.isHidden = true
+                }
+                if UIIVMillage.image == nil {
+                    lblOdometerError.isHidden = false
+                    allFieldsChecked = false
+                }else{
+                    lblOdometerError.isHidden = true
+                }
             }
-            if UIIVMillage.image == nil {
-                lblOdometerError.isHidden = false
-                allFieldsChecked = false
-            }else{
-                lblOdometerError.isHidden = true
-            }*/
+           
         }
         
         return allFieldsChecked
@@ -397,7 +414,7 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
                                 self.avability.append("< available >")
                                // print("LaneLotID:\(i.LanelotID), DlrID:\(i.DLrID), LaneLot:\(i.LaneLot), AucID:\(i.AucID), SaleDate:\(i.SaleDate), LotID:\(i.LotID), vin:\(i.vin), make:\(i.make), model:\(i.model), yr:\(i.yr), lotmemo:\(i.lotmemo)")
                             }else{
-                                self.avability.append("< reserved >")
+                                self.avability.append("< \(i.lotmemo) >")
                             }
                             availableCount = availableCount + 1
                         }else {
@@ -424,24 +441,20 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
                 alert.addAction(okAction)
                 self.present(alert, animated: true, completion: nil)
                 self.removeSpinner()
-
             }
             self.removeSpinner()
-            
         }
         task.resume()
       
     }
     
   
+    //MARK: Begins the Save/Upload process
     @IBAction func UploadVehicle(_ sender: Any) {
         if !checkFieldEntry(btnClicked: "save") {
             print("NOT ALL FIELDS ARE IN!!!")
         }else{
-        
-            
             let alert = UIAlertController(title: "Save", message: "Are you sure you want to save?", preferredStyle: .alert)
-           
             let yesAction = UIAlertAction(title: "Yes", style: UIAlertAction.Style.default) {
                 UIAlertAction in
                 self.dismiss(animated: true, completion: nil)
@@ -454,70 +467,9 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
             alert.addAction(yesAction)
             alert.addAction(noAction)
             self.present(alert, animated: true, completion: nil)
-
-            
-           
         }
     }
     
-    
-    func updateVehicle(todoEndpoint: String){
-        print("Here is the URL: \(todoEndpoint)")
-        
-        guard let url = URL(string: todoEndpoint) else {
-            print("ERROR: cannot create URL")
-            self.removeSpinner()
-            return
-        }
-        
-        var urlRequest = URLRequest(url: url)
-        
-        urlRequest.addValue("text/xml", forHTTPHeaderField: "Content-Type")
-        urlRequest.addValue("text/xml", forHTTPHeaderField: "Accept")
-        
-        let session = URLSession.shared
-        let task = session.dataTask(with: urlRequest){ data, response, error in
-            
-            guard error == nil else{
-                print("ERROR: calling GET: \(error!)")
-                self.removeSpinner()
-                return
-            }
-            
-            
-            guard let data = data else { print("DATA ERROR!!!"); return }
-             print(data)
-            do {
-                //let t = try JSONDecoder().decode(myResponse.self, from: data)
-                DispatchQueue.main.async {
-                    //
-                    /*let alert = UIAlertController(title: "Success", message: "Vehicle equipment was successfully updated", preferredStyle: .alert)
-                     alert.addAction(UIAlertAction(title: "Close", style: .default, handler: { action in
-                     }))
-                     self.present(alert, animated: true, completion: nil)*/
-                    
-                    //MARK: ImageSend Starts Here!
-                    self.sendImages()
-                    
-                    self.removeSpinner()
-                }
-                
-                
-            }catch{
-                print(error)
-                
-                let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Close", style: .default, handler: { action in
-                    
-                }))
-                self.present(alert, animated: true, completion: nil)
-                
-                self.removeSpinner()
-            }
-            
-        }
-        task.resume()
-    }
     
     func saveVehicle(type: Bool){
         let lLaneLotID = lanelotID
@@ -544,7 +496,6 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
         
         //is on property
         if type == true {
-            
             let alert = UIAlertController(title: "Update", message: "This will update the existing cars", preferredStyle: .alert)
             let OKAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
                 UIAlertAction in
@@ -553,14 +504,18 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
                 self.updateVehicle(todoEndpoint: updateURL)
                 self.dismiss(animated: true, completion: nil)
             }
+            let cancelAction = UIAlertAction(title: "Cancel", style:  UIAlertAction.Style.default) {
+                UIAlertAction in
+                  self.dismiss(animated: true, completion: nil)
+            }
             alert.addAction(OKAction)
+            alert.addAction(cancelAction)
             self.present(alert, animated: true, completion: nil)
-            
         }
-        else{ 
+        else{ //Is not on property, A New Car
              showSpinner(onView: self.view)
              
-             let todoEndpoint: String = "https://mobile.aane.com/auction.asmx/CheckInVehicleMobile?lAucID=0&lLaneLotID=\(lLaneLotID)&VIN=\(lvin)&seldlr=\(seldlr)&yr=\(forURLs(s:yr))&make=\(forURLs(s:make))&model=\(forURLs(s:model))&body=\(forURLs(s:body))&mileage=\(forURLs(s:mileage))&vehcolor=\(forURLs(s:vehcolor))&vehclassid=\(vehclassid)&lSecID=1&sStockNO=\(sStockNo)&sComment=\(forURLs(s:sComment))&UVC=\(uvc)"
+             let todoEndpoint: String = "https://mobile.aane.com/auction.asmx/CheckInVehicleMobile?lAucID=\(aucid)&lLaneLotID=\(lLaneLotID)&VIN=\(lvin)&seldlr=\(seldlr)&yr=\(forURLs(s:yr))&make=\(forURLs(s:make))&model=\(forURLs(s:model))&body=\(forURLs(s:body))&mileage=\(forURLs(s:mileage))&vehcolor=\(forURLs(s:vehcolor))&vehclassid=\(vehclassid)&lSecID=1&sStockNO=\(sStockNo)&sComment=\(forURLs(s:sComment))&UVC=\(uvc)"
              
              print("Here is the URL: \(todoEndpoint)")
             
@@ -588,20 +543,16 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
                 print(data)
              
                 do {
-             
-                        //let t = try JSONDecoder().decode(myResponse.self, from: data)
-             
-                        DispatchQueue.main.async {
-             
+                    DispatchQueue.main.async {
                             /*let alert = UIAlertController(title: "Success", message: "Vehicle equipment was successfully updated", preferredStyle: .alert)
                                 alert.addAction(UIAlertAction(title: "Close", style: .default, handler: { action in
-             
                              }))
                             self.present(alert, animated: true, completion: nil)*/
-             
-                                self.removeSpinner()
-                        }
-             
+                        self.removeSpinner()
+                            
+                        //MARK: ImageSend Starts Here! (UPLOAD)
+                        self.sendImages()
+                    }
              
                 }catch{
                     print(error)
@@ -617,17 +568,68 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
             }
             task.resume()
         }
-        
-    
-        
-       
-        
-           // uploadImage(DorOPhoto:, isDefault: )
     }
+    
+    func updateVehicle(todoEndpoint: String){
+           print("Here is the URL: \(todoEndpoint)")
+           
+           guard let url = URL(string: todoEndpoint) else {
+               print("ERROR: cannot create URL")
+               self.removeSpinner()
+               return
+           }
+           
+           var urlRequest = URLRequest(url: url)
+           
+           urlRequest.addValue("text/xml", forHTTPHeaderField: "Content-Type")
+           urlRequest.addValue("text/xml", forHTTPHeaderField: "Accept")
+           
+           let session = URLSession.shared
+           let task = session.dataTask(with: urlRequest){ data, response, error in
+               
+               guard error == nil else{
+                   print("ERROR: calling GET: \(error!)")
+                   self.removeSpinner()
+                   return
+               }
+               
+               guard let data = data else { print("DATA ERROR!!!"); return }
+                print(data)
+               do {
+                   //let t = try JSONDecoder().decode(myResponse.self, from: data)
+                   DispatchQueue.main.async {
+                       //
+                       /*let alert = UIAlertController(title: "Success", message: "Vehicle equipment was successfully updated", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Close", style: .default, handler: { action in
+                        }))
+                        self.present(alert, animated: true, completion: nil)*/
+                       self.removeSpinner()
+                       //MARK: ImageSend (UPDATE) Negated here if needed
+                       self.sendImages()
+                       self.navigationController!.popToRootViewController(animated: true)
+                   }
+                   
+               }catch{
+                   print(error)
+                   
+                   let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
+                   alert.addAction(UIAlertAction(title: "Close", style: .default, handler: { action in
+                       
+                   }))
+                   self.present(alert, animated: true, completion: nil)
+                   
+                   self.removeSpinner()
+               }
+               
+           }
+           task.resume()
+       }
     
     
     func forURLs(s: String) -> String {
-        return s.replacingOccurrences(of: " ", with: "%20")
+        let newString = s.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        return newString.replacingOccurrences(of: " ", with: "%20")
     }
     
 
@@ -675,11 +677,13 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
     
                         if self.thisVehicleClass?.VehClassDesc == "Car / Truck"{
                            // self.isValid = false
-                            let alert = UIAlertController(title: "No Vehicle Found", message: "Unable to link a car/truck with this valid vin: \(self.vin)\nMake Sure you have selected the right class", preferredStyle: .alert)
+                            let alert = UIAlertController(title: "No Vehicle Found", message: "Unable to link a car/truck with this valid vin: \(self.vin)\nMake sure you have selected the right class and that the vehicle is on property", preferredStyle: .alert)
                             //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
                             let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
                                 UIAlertAction in
                                 self.dismiss(animated: true, completion: nil)
+                                self.navigationController?.popViewController(animated: true)
+
                             }
                             alert.addAction(okAction)
                             self.present(alert, animated: true, completion: nil)
@@ -710,29 +714,15 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
                         self.removeSpinner()
                         
                         //MARK: MANAGE UNIT, IS IT COMING IN, ON PROPERTY, OR PREDELIVERY?
-                        if self.vList[0].AucStat.trimmingCharacters(in: .whitespacesAndNewlines) == "PRE" || self.vList[0].AucStat.trimmingCharacters(in: .whitespacesAndNewlines) == "ACT" {
+                        if self.vList[0].AucStat.trimmingCharacters(in: .whitespacesAndNewlines) == "PRE" || self.vList[0].AucStat.trimmingCharacters(in: .whitespacesAndNewlines) == "ACT" || self.vList[0].AucStat.trimmingCharacters(in: .whitespacesAndNewlines) == "INV" {//|| self.vList[0].AucStat.trimmingCharacters(in: .whitespacesAndNewlines) == "SLDPS"
+                        
                           //  self.isValid = true
                             print("\(self.vList[0].Model)")
                             let alert = UIAlertController(title: "Already Checked In", message: "Edit Vehicle Info?", preferredStyle: .alert)
                             //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
                             let okAction = UIAlertAction(title: "Yes", style: UIAlertAction.Style.default) { UIAlertAction in
                                 self.dismiss(animated: true, completion: nil)
-                                /*
-                                 let lLaneLotID = lanelotID
-                                 let lvin = self.vin
-                                 let seldlr = dealer!.DlrID
-                                 let yr = txtYear.text!.trimmingCharacters(in: .whitespaces)
-                                 let make = txtMake.text!.trimmingCharacters(in: .whitespaces)
-                                 let model = txtModel.text!.trimmingCharacters(in: .whitespaces)
-                                 let body = btnNEWSelectBody.titleLabel!.text!
-                                 let mileage = txtMileage.text!.trimmingCharacters(in: .whitespaces)
-                                 let vehcolor = txtColor.text!.trimmingCharacters(in: .whitespaces)
-                                 let vehclassid = thisVehicleClass!.VehClassID
-                                 // let lSecID = "1"
-                                 let sStockNo = txtStockNumber.text!
-                                 let sComment = txtvComments.text!.trimmingCharacters(in: .whitespaces)
-                                 var uvc = ""
-                                 */
+                                
                                 self.ISONPROPERITY = true
                                 self.aucid = self.vList[0].ID.trimmingCharacters(in: .whitespacesAndNewlines)
                                // self.currentLaneLotID = self.vList[0].LaneLotID
@@ -753,6 +743,20 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
                                 self.lanelotID = self.vList[0].LaneLotID.trimmingCharacters(in: .whitespacesAndNewlines)
                                 print("The old LaneLotID is: \(self.lanelotID)")
                                 self.btnSelectLotLane.setTitle("\(self.vList[0].LaneID.trimmingCharacters(in: .whitespacesAndNewlines))-\(self.vList[0].LotID.trimmingCharacters(in: .whitespacesAndNewlines))", for: .normal)
+                                
+                                //MARK: GETS FULL VIN
+                                if self.vList[0].LOCATION.count == 17 {
+                                    self.vin = self.vList[0].LOCATION
+                                    let d = self.dealer!.DlrName
+                                    let s = self.thisVehicleClass!.VehClassDesc
+                                    self.navigationItem.title = "\(d)(\(s): \(self.vin))"
+                                    
+                                    print("THE NEW DEALERID IS \(d)")
+                                }
+                                
+                                self.btnCRPhoto.isHidden = false
+                                self.btnOLPhoto.isHidden = false
+                                
                             }
                             alert.addAction(okAction)
                             
@@ -765,7 +769,20 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
                             alert.addAction(noAction)
                             self.present(alert, animated: true, completion: nil)
                           
-                            
+                        /*}else if self.vList[0].AucStat == "SLDPS" || self.vList[0].AucStat.trimmingCharacters(in: .whitespacesAndNewlines) == "ACT" || self.vList[0].AucStat.trimmingCharacters(in: .whitespacesAndNewlines) == "INV" {
+                                
+                            let alert = UIAlertController(title: "Error", message: "Cannot take with AucStat:\(self.vList[0].AucStat)", preferredStyle: .alert)
+                            //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
+                            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { UIAlertAction in
+                                self.dismiss(animated: true, completion: nil)
+                                
+                                self.navigationController!.popViewController(animated: true)
+
+                                
+                            }
+                            alert.addAction(okAction)
+                            self.present(alert, animated: true, completion: nil)*/
+                        
                         }else if self.vList[0].Model.contains("Invalid VIN") || self.vList[0].Model.contains("VIN must be 17 characters"){
                            // self.isValid = false
                             print("\(self.vList[0].Model)")
@@ -773,45 +790,32 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
                             //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
                             let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { UIAlertAction in
                                 self.dismiss(animated: true, completion: nil)
+                                
+                                self.navigationController!.popViewController(animated: true)
+
+                                
                             }
                             alert.addAction(okAction)
                             self.present(alert, animated: true, completion: nil)
                             
-                        }/*else if self.vList[0].AucStat == "ACT"{
+                        }
+                            /*else if self.vList[0].AucStat == "ACT"{
                         
                             let alert = UIAlertController(title: "Already Checked In, ACT", message: "THIS UNIT IS NOT A PREDELIVERY", preferredStyle: .alert)
                             let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { UIAlertAction in
                                 self.dismiss(animated: true, completion: nil)
-                                self.navigationController?.popViewController(animated: true)
-
                             }
                             alert.addAction(okAction)
                             self.present(alert, animated: true, completion: nil)
                             
-                        }*/else{
+                        }*/
+                        else{
                             
-                            /*
-                             let lLaneLotID = lanelotID
-                             let lvin = self.vin
-                             let seldlr = dealer!.DlrID
-                             let yr = txtYear.text!.trimmingCharacters(in: .whitespaces)
-                             let make = txtMake.text!.trimmingCharacters(in: .whitespaces)
-                             let model = txtModel.text!.trimmingCharacters(in: .whitespaces)
-                             let body = btnNEWSelectBody.titleLabel!.text!
-                             let mileage = txtMileage.text!.trimmingCharacters(in: .whitespaces)
-                             let vehcolor = txtColor.text!.trimmingCharacters(in: .whitespaces)
-                             let vehclassid = thisVehicleClass!.VehClassID
-                             // let lSecID = "1"
-                             let sStockNo = txtStockNumber.text!
-                             let sComment = txtvComments.text!.trimmingCharacters(in: .whitespaces)
-                             var uvc = ""
-                             */
-                          //  self.isValid = true
                             self.txtYear.text = self.vList[0].Yr
                             self.txtMake.text = self.vList[0].Make
                             self.txtModel.text = self.vList[0].Model
                             
-                            self.btnNEWSelectBody.setTitle(self.vList[0].Body, for: .normal)
+                            //self.btnNEWSelectBody.setTitle(self.vList[0].Body, for: .normal)
                             
                             self.lanelotID = self.vList[0].LaneLotID
                             
@@ -819,16 +823,17 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
                             
                             
                             //adds the different body types to the body table
+                            //MARK: Adds Body Types HERE
                             for v in self.vList{
                                 self.bodyTypes.append(v.Series)
                             }
                             //adds these values to the end of the list
                             //self.bodyTypes.append("Enter Body Manually")
                             self.bodyTypes.append("Unknown")
-
+                            
                             if self.bodyTypes.count == 3 {
                                 //self.btnNEWSelectBody.titleLabel?.text = self.bodyTypes[1]
-                                self.btnNEWSelectBody.setTitle(self.bodyTypes[1], for: .normal)
+                                //self.btnNEWSelectBody.setTitle(self.bodyTypes[1], for: .normal)
                             }
                             
                             self.tvBody.reloadData()
@@ -859,6 +864,7 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
     //manages title
     override func viewDidAppear(_ animated: Bool) {
         let d = dealer!.DlrName
+        
         let s = thisVehicleClass!.VehClassDesc
         self.navigationItem.title = "\(d)(\(s): \(vin))"
         if counter != 0 {
@@ -884,6 +890,7 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
         }else{
             tvLaneLot.isHidden = true
         }
+     
     }
     
     @IBAction func TakePhotos(_ sender: Any) {
@@ -975,6 +982,15 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
             navigationItem.backBarButtonItem = backItem
             let vc = segue.destination as! VCGetInventoryNumbers
             vc.dealerID = dealer!.DlrID
+        }else if segue.identifier == "OLandCRpics"{
+            let backItem = UIBarButtonItem()
+            backItem.title = "Back"
+            navigationItem.backBarButtonItem = backItem
+            let vc = segue.destination as! VCAdditionalPhoto
+            vc.vin = self.vin
+            vc.crORolPhoto = self.crORolPhoto
+            
+            
         }
     }
     
@@ -1038,10 +1054,13 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
     
     
     
+    
+    
     func manualBodyEntry() {
         var txtEnterBody: UITextField?
         
         txtEnterBody?.autocapitalizationType = .allCharacters
+       // txtEnterBody?.autocapitalizationType = .
         
         let alert = UIAlertController(title: "Input Body", message: "Enter the body manually", preferredStyle: .alert)
         
@@ -1064,6 +1083,18 @@ class VCVehicle: UIViewController, UpdateImageProtocol {
         alert.addAction(enterAction)
         present(alert, animated: true, completion: nil)
     }
+    
+    
+    
+    @IBAction func takeOLPhoto(_ sender: Any) {
+        crORolPhoto = "OL"
+        performSegue(withIdentifier: "OLandCRpics", sender: nil)
+    }
+    @IBAction func takeCRPhoto(_ sender: Any) {
+        crORolPhoto = "CR"
+        performSegue(withIdentifier: "OLandCRpics", sender: nil)
+    }
+    
     
 }
 
@@ -1119,32 +1150,58 @@ extension VCVehicle: UITableViewDelegate, UITableViewDataSource{
                 print("ID for the Lane Lot is now: \(lanelotID)")
                 tvLaneLot.isHidden = true
             }else{
-                btnSelectLotLane.setTitle(laneLots[indexPath.row], for: .normal)
-                lanelotID = laneLotIDs[indexPath.row]
-                print("ID for the Lane Lot is now: \(lanelotID)")
-                tvLaneLot.isHidden = true
+                
+                if avability[indexPath.row] != "" {
+                    
+                    btnSelectLotLane.setTitle(laneLots[indexPath.row], for: .normal)
+                    lanelotID = laneLotIDs[indexPath.row]
+                    print("ID for the Lane Lot is now: \(lanelotID)")
+                    tvLaneLot.isHidden = true
+                    
+                } else {
+                    
+                }
+         
             }
         }
     }
+
+    
+    func doOdom(){
+        if UIIVMillage.image != nil {
+            let alert = UIAlertController(title: "Upload Odometer Photo?", message: "", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                print("Attempting Odom image Upload")
+                self.uploadImage(DorOPhoto: self.millageImage!, isDefault: false)
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: { action in
+                self.navigationController?.popToRootViewController(animated: true)
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            print("The Odometer was blank")
+        }
+
+    }
     
     
-    
-    
-    //MARK: UPLOAD IMAGES
+  
     func uploadImage(DorOPhoto: UIImage, isDefault: Bool){
         print("In Upload function")
         let localImageName = "NotStoredLocally\(vin)"
         
+        self.showSpinner(onView: self.view)
+        
+        //let v = String(vin) + String(isDefault) + "TEST"
+        print("isDefault: \(isDefault)")
         let v = String(vin) + String(isDefault)
+        
         
         let paramName = v
         let fileName = localImageName
         let image = DorOPhoto
-        
-       // showSpinner(onView: self.view)
-        
-        
-        let url = URL(string: "https://mobile.aane.com/Auction.asmx/SendPicture")
+  
+        let url = URL(string: "https://mobile.aane.com/Auction.asmx/CheckInSendPicture")
         print(url!)
         // generate boundary string using a unique per-app string
         let boundary = UUID().uuidString
@@ -1159,6 +1216,7 @@ extension VCVehicle: UITableViewDelegate, UITableViewDataSource{
         // Set Content-Type Header to multipart/form-data, this is equivalent to submitting form data with file upload in a web browser
         // And the boundary is also set here
         urlRequest.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        print("urlRequest: \(urlRequest)")
         
         var data = Data()
         
@@ -1182,11 +1240,11 @@ extension VCVehicle: UITableViewDelegate, UITableViewDataSource{
         session.uploadTask(with: urlRequest, from: data, completionHandler: { responseData, response, error in
             DispatchQueue.main.async {
                 
-            
-            print("In UploadTask")
-            print("Error: \(String(describing: error))\n\n")
-            print("response: \(String(describing: response))\n\n")
-            print("responseData: \(String(describing: responseData))\n\n")
+            //print("In UploadTask")
+            //print("<Error: \(String(describing: error))>\n")
+            //print("<response: \(String(describing: response))\n>")
+            //print("<responseData: \(String(describing: responseData))\n>")
+                
             if error != nil {
                 self.removeSpinner()
                 
@@ -1201,7 +1259,7 @@ extension VCVehicle: UITableViewDelegate, UITableViewDataSource{
             }else{
            
                 let jsonData = try? JSONSerialization.jsonObject(with: responseData!, options: .allowFragments)
-               // print("JSON DATA: \(jsonData)")
+                //print("JSON DATA: \(jsonData)")
                 
                 if let json = jsonData as? [String: Any] {
                     print("THE JSON IS: \(json)")
@@ -1217,11 +1275,19 @@ extension VCVehicle: UITableViewDelegate, UITableViewDataSource{
                             let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
                                 UIAlertAction in
                                 self.dismiss(animated: true, completion: nil)
+                                if self.Odomcount == 0 {
+                                    self.Odomcount = 1
+                                    self.doOdom()
+                                }else{
+                                    self.navigationController!.popToRootViewController(animated: true)
+                                }
                             }
                             alert.addAction(okAction)
                             
                             self.present(alert, animated: true, completion: nil)
                         }else {
+                            
+                            self.removeSpinner()
                             
                             let alert = UIAlertController(title: "ERROR", message: "Could not upload photo, make sure vehicle is registered on property", preferredStyle: .alert)
                             //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
@@ -1229,11 +1295,17 @@ extension VCVehicle: UITableViewDelegate, UITableViewDataSource{
                             let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
                                 UIAlertAction in
                                 self.dismiss(animated: true, completion: nil)
+                            
+                                if self.Odomcount == 0 {
+                                    self.Odomcount = 1
+                                    self.doOdom()
+                                }else{
+                                    self.navigationController!.popToRootViewController(animated: true)
+                                }
                             }
+                            
                             alert.addAction(okAction)
-                            
                             self.present(alert, animated: true, completion: nil)
-                            
                         }
                         
                         
@@ -1245,6 +1317,7 @@ extension VCVehicle: UITableViewDelegate, UITableViewDataSource{
                         let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
                             UIAlertAction in
                             self.dismiss(animated: true, completion: nil)
+                            self.navigationController!.popToRootViewController(animated: true)
                         }
                         alert.addAction(okAction)
                         
@@ -1254,7 +1327,18 @@ extension VCVehicle: UITableViewDelegate, UITableViewDataSource{
                     //}
                     self.removeSpinner()
                 }else{
-                    print("Something went wrong!!!")
+                    let alert = UIAlertController(title: "ERROR", message: "That wasn't supposed to happen", preferredStyle: .alert)
+                    //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
+                    
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                        UIAlertAction in
+                        self.dismiss(animated: true, completion: nil)
+                        self.navigationController!.popToRootViewController(animated: true)
+                        //self.takeMoreCRPhotos()
+                    }
+                    alert.addAction(okAction)
+                    
+                    self.present(alert, animated: true, completion: nil)
                 }
                 
                 
@@ -1263,14 +1347,15 @@ extension VCVehicle: UITableViewDelegate, UITableViewDataSource{
             }
         }
         }).resume()
-        
     }
     
+    
+    //MARK: LIVE EDITS BEGIN HERE 10/21/2019
     func sendImages(){
         if UIIVDefault.image != nil {
-            let alert = UIAlertController(title: "Upload Photo?", message: "", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Upload Default Photo?", message: "", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
-                print("Attempting image Upload")
+                print("Attempting Default image Upload")
                 self.uploadImage(DorOPhoto: self.defaultImage!, isDefault: true)
             }))
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: { action in
@@ -1279,167 +1364,19 @@ extension VCVehicle: UITableViewDelegate, UITableViewDataSource{
             self.present(alert, animated: true, completion: nil)
         }
     }
- 
-    /*
-     func uploadImage(paramName: String, fileName: String, image: UIImage) {
-     showSpinner(onView: self.view)
-     
-     saveButton.isEnabled = false
-     
-     //    progressView.setProgress(currentTime, animated: true)
-     //      perform(#selector(updateProgress),with: nil, afterDelay: 1.0)
-     
-     
-     // let url = URL(string: "https://mobile.aane.com/Auction.asmx/SendPicture")
-     //     let url = URL(string: "https://mobile.aane.com/auction/auction.asmx/SendPicture")
-     
-     // generate boundary string using a unique per-app string
-     let boundary = UUID().uuidString
-     
-     // let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
-     let session = URLSession.shared
-     //changed to above 2019/03/21 let session = URLSession.shared
-     
-     // Set the URLRequest to POST and to the specified URL
-     var urlRequest = URLRequest(url: url!)
-     urlRequest.httpMethod = "POST"
-     
-     print("paramname: \(paramName)")
-     
-     // Set Content-Type Header to multipart/form-data, this is equivalent to submitting form data with file upload in a web browser
-     // And the boundary is also set here
-     urlRequest.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-     
-     var data = Data()
-     
-     // Add the image data to the raw http request data
-     data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-     data.append("Content-Disposition: form-data; name=\"\(paramName)\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
-     data.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
-     
-     
-     //  let img = image.pngData()
-     let imgResized =  image.resizeWithPercent(percentage: 0.3)
-     
-     let img = imgResized?.jpegData(compressionQuality: 0.4)
-     
-     
-     let base64String = img?.base64EncodedString(options: NSData.Base64EncodingOptions.lineLength64Characters)
-     // let myDataEncoded = base64String?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-     
-     data.append(base64String!)
-     
-     data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
-     
-     
-     
-     // Send a POST request to the URL, with the data we created earlier
-     
-     session.uploadTask(with: urlRequest, from: data, completionHandler: { responseData, response, error in
-     //         self.fetchFile(url: self.url! )
-     if error != nil {
-     self.removeSpinner()
-     
-     let alert = UIAlertController(title: "ERROR", message: "Check your connection", preferredStyle: .alert)
-     print("\(error!)")
-     let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-     UIAlertAction in
-     self.dismiss(animated: true, completion: nil)
-     }
-     alert.addAction(okAction)
-     self.present(alert, animated: true, completion: nil)
-     }
-     
-     if error == nil {
-     let jsonData = try? JSONSerialization.jsonObject(with: responseData!, options: .allowFragments)
-     if let json = jsonData as? [String: Any] {
-     print("THE JSON IS: \(json)")
-     self.currentTime = self.MAXTIME
-     //let jsonStr = "\(json)"
-     
-     
-     /*let range: Range<String.Index> = jsonStr.range(of: "Success")!
-     let index: Int = jsonStr.distance(from: jsonStr.startIndex, to: range.lowerBound)*/
-     
-     /* if !jsonStr.contains("Success") {
-     let alert = UIAlertController(title: "ERROR", message: "\(json)", preferredStyle: .alert)
-     alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
-     self.present(alert, animated: true, completion: nil)
-     
-     }*/
-     // else{
-     self.removeSpinner()
-     
-     
-     if let r = json["result"] as? String{
-     if r == "Success"{
-     
-     let id = json["imageid"] as? Int
-     
-     let alert = UIAlertController(title: r, message: "Photo successfully uploaded\nImageID: \(id ?? 0000000000)", preferredStyle: .alert)
-     //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
-     
-     let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-     UIAlertAction in
-     self.dismiss(animated: true, completion: nil)
-     }
-     alert.addAction(okAction)
-     
-     self.present(alert, animated: true, completion: nil)
-     }else {
-     
-     let alert = UIAlertController(title: "ERROR", message: "Could not upload photo, make sure vehicle is registered on property", preferredStyle: .alert)
-     //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
-     
-     let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-     UIAlertAction in
-     self.dismiss(animated: true, completion: nil)
-     }
-     alert.addAction(okAction)
-     
-     self.present(alert, animated: true, completion: nil)
-     
-     }
-     
-     
-     }else{
-     
-     let alert = UIAlertController(title: "ERROR", message: "\(json)", preferredStyle: .alert)
-     //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
-     
-     let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-     UIAlertAction in
-     self.dismiss(animated: true, completion: nil)
-     }
-     alert.addAction(okAction)
-     
-     self.present(alert, animated: true, completion: nil)
-     }
-     
-     //}
-     self.removeSpinner()
-     }
-     
-     
-     self.removeSpinner()
-     }
-     }).resume()
-     
-     //self.removeSpinner()
-     
-     self.saveButton.isEnabled = true
-     }
-     */
     
     
-    
+    func takeMoreCRPhotos(){
+        //self.navigationController!.popToRootViewController(animated: true)
+       
+        
+    }
     
 }
 
 
 
 extension UIImage {
-    
     func resizeWithPercent(percentage: CGFloat) -> UIImage? {
         let imageView = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: size.width * percentage, height: size.height * percentage)))
         imageView.contentMode = .scaleAspectFit
@@ -1453,13 +1390,9 @@ extension UIImage {
     }
 }
 
-
-
-
 extension VCVehicle: UITextFieldDelegate, UITextViewDelegate{
-    
     //allow only ints to be used in yr and mileage
-   /* func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == txtYear || textField == txtMileage {
             let allowedCharacters = "1234567890"
             let allowedCharacterSet = CharacterSet(charactersIn: allowedCharacters)
@@ -1475,8 +1408,7 @@ extension VCVehicle: UITextFieldDelegate, UITextViewDelegate{
             return alphabet
         }
         return true
-    }*/
-    
+    }
 }
 
 
@@ -1506,239 +1438,3 @@ extension Int {
 }
 
 
-/*func NEWverifyVIN(vin: String){
- showSpinner(onView: self.view)
- 
- let todoEndpoint: String = "https://mobile.aane.com/auction.asmx/VINDecode?requestSTR=\(vin)"
- 
- //print(todoEndpoint)
- //empty the list
- vList.removeAll()
- 
- guard let url = URL(string: todoEndpoint) else {
- print("ERROR: cannot create URL")
- self.removeSpinner()
- return
- }
- 
- var urlRequest = URLRequest(url: url)
- //print(urlRequest)
- 
- urlRequest.addValue("text/xml", forHTTPHeaderField: "Content-Type")
- urlRequest.addValue("text/xml", forHTTPHeaderField: "Accept")
- 
- let session = URLSession.shared
- 
- let task = session.dataTask(with: urlRequest){ data, response, error in
- 
- guard error == nil else{
- print("ERROR: calling GET: \(error!)")
- self.removeSpinner()
- return
- }
- 
- guard let data = data else { print("DATA ERROR!!!"); return }
- 
- do{
- print(data)
- let vehicles = try JSONDecoder().decode(vinVehicles.self, from: data)
- 
- DispatchQueue.main.async {
- // print(t)
- if vehicles.vl.isEmpty{
- 
- if self.thisVehicleClass?.VehClassDesc == "Car / Truck"{
- // self.isValid = false
- let alert = UIAlertController(title: "No Vehicle Found", message: "Unable to link a car/truck with this valid vin: \(self.vin)\nMake Sure you have selected the right class", preferredStyle: .alert)
- //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
- let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
- UIAlertAction in
- self.dismiss(animated: true, completion: nil)
- }
- alert.addAction(okAction)
- self.present(alert, animated: true, completion: nil)
- }else{
- //self.isValid = true
- let alert = UIAlertController(title: "Manually Entry Required", message: "Valid VIN\nClass: (\(self.thisVehicleClass!.VehClassDesc))\nFields must be entered manually", preferredStyle: .alert)
- //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
- let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
- UIAlertAction in
- self.dismiss(animated: true, completion: nil)
- }
- alert.addAction(okAction)
- self.present(alert, animated: true, completion: nil)
- }
- }else if vehicles.vl.count == 1 {
- 
- }else {
- for v in vehicles.vl{
- let vel = DecodedVINObject(ID: v.ID, VID: v.VID, Make: v.Make, Model: v.Model, Series: v.Series, Yr: v.Yr, UVC: v.UVC, AucStat: v.AucStat, Mileage: v.Mileage, VehColor: v.VehColor, Body: v.Body, LaneLotID: v.LaneLotID, LaneID: v.LaneID, LotID: v.LotID, StockNumber: v.StockNumber, LOCATION: v.LOCATION)//DecodedVINObject(ID: v.ID, VID: v.VID, Make: v.Make, Model: v.Model, Series: v.Series, Yr: v.Yr, UVC: v.UVC,)
- //print("\(vel.Make), \(vel.Make), \(vel.Model), \(vel.UVC)")
- self.vList.append(vel)
- }
- 
- self.removeSpinner()
- 
- if  self.vList[0].Model.contains("Invalid VIN") || self.vList[0].Model.contains("VIN must be 17 characters"){
- // self.isValid = false
- print("\(self.vList[0].Model)")
- let alert = UIAlertController(title: "Invaild VIN", message: "\(self.vList[0].Model)", preferredStyle: .alert)
- //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
- let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { UIAlertAction in
- self.dismiss(animated: true, completion: nil)
- }
- alert.addAction(okAction)
- self.present(alert, animated: true, completion: nil)
- 
- }else if self.vList[0].AucStat == "ACT"{
- 
- let alert = UIAlertController(title: "Already Checked In, NOT PRE", message: "THIS UNIT IS NOT A PREDELIVERY", preferredStyle: .alert)
- let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { UIAlertAction in
- self.dismiss(animated: true, completion: nil)
- }
- alert.addAction(okAction)
- self.present(alert, animated: true, completion: nil)
- }else{
- }
- }
- else{
- // self.isValid = true
- for v in vehicles.vl{
- 
- // print("--------- Coming From Call ---------")
- print("ID:\(v.ID), VID:\(v.VID), Make:\(v.Make), Model:\(v.Model), Series:\(v.Series), Yr:\(v.Yr), UVC:\(v.UVC), AucStat:\(v.AucStat), Miles:\(v.Mileage), vehColor:\(v.VehColor), body:\(v.Body), laneLotID:\(v.LaneLotID), laneID:\(v.LaneID), lotID:\(v.LotID), Stock#:\(v.StockNumber), Location:\(v.LOCATION)")
- //print("--------- Coming From Call ---------")
- 
- let vel = DecodedVINObject(ID: v.ID, VID: v.VID, Make: v.Make, Model: v.Model, Series: v.Series, Yr: v.Yr, UVC: v.UVC, AucStat: v.AucStat, Mileage: v.Mileage, VehColor: v.VehColor, Body: v.Body, LaneLotID: v.LaneLotID, LaneID: v.LaneID, LotID: v.LotID, StockNumber: v.StockNumber, LOCATION: v.LOCATION)//DecodedVINObject(ID: v.ID, VID: v.VID, Make: v.Make, Model: v.Model, Series: v.Series, Yr: v.Yr, UVC: v.UVC,)
- //print("\(vel.Make), \(vel.Make), \(vel.Model), \(vel.UVC)")
- self.vList.append(vel)
- }
- 
- self.removeSpinner()
- 
- //MANAGE UNIT, IS IT COMING IN, ON PROPERTY, OR PREDELIVERY?
- if self.vList[0].AucStat.trimmingCharacters(in: .whitespacesAndNewlines) == "PRE" {
- //  self.isValid = true
- print("\(self.vList[0].Model)")
- let alert = UIAlertController(title: "Already Checked In", message: "Submit Predelivery?", preferredStyle: .alert)
- //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
- let okAction = UIAlertAction(title: "Yes", style: UIAlertAction.Style.default) { UIAlertAction in
- self.dismiss(animated: true, completion: nil)
- /*
- let lLaneLotID = lanelotID
- let lvin = self.vin
- let seldlr = dealer!.DlrID
- let yr = txtYear.text!.trimmingCharacters(in: .whitespaces)
- let make = txtMake.text!.trimmingCharacters(in: .whitespaces)
- let model = txtModel.text!.trimmingCharacters(in: .whitespaces)
- let body = btnNEWSelectBody.titleLabel!.text!
- let mileage = txtMileage.text!.trimmingCharacters(in: .whitespaces)
- let vehcolor = txtColor.text!.trimmingCharacters(in: .whitespaces)
- let vehclassid = thisVehicleClass!.VehClassID
- // let lSecID = "1"
- let sStockNo = txtStockNumber.text!
- let sComment = txtvComments.text!.trimmingCharacters(in: .whitespaces)
- var uvc = ""
- */
- self.ISONPROPERITY = true
- 
- self.txtYear.text = self.vList[0].Yr.trimmingCharacters(in: .whitespacesAndNewlines)
- self.txtMake.text = self.vList[0].Make.trimmingCharacters(in: .whitespacesAndNewlines)
- self.txtModel.text = self.vList[0].Model.trimmingCharacters(in: .whitespacesAndNewlines)
- self.txtColor.text = self.vList[0].VehColor.trimmingCharacters(in: .whitespacesAndNewlines)
- self.txtMileage.text = self.vList[0].Mileage.trimmingCharacters(in: .whitespacesAndNewlines)
- self.txtStockNumber.text = self.vList[0].StockNumber.trimmingCharacters(in: .whitespacesAndNewlines)
- 
- self.btnNEWSelectBody.setTitle(self.vList[0].Body.trimmingCharacters(in: .whitespacesAndNewlines), for: .normal)
- self.bodyTypes.append("\(self.vList[0].Body.trimmingCharacters(in: .whitespacesAndNewlines))")
- self.bodyTypes.append("Unknown")
- self.tvBody.reloadData()
- 
- self.lanelotID = self.vList[0].LaneLotID.trimmingCharacters(in: .whitespacesAndNewlines)
- self.btnSelectLotLane.setTitle("\(self.vList[0].LaneID.trimmingCharacters(in: .whitespacesAndNewlines))-\(self.vList[0].LotID.trimmingCharacters(in: .whitespacesAndNewlines))", for: .normal)
- }
- alert.addAction(okAction)
- 
- let noAction  = UIAlertAction(title: "No", style: UIAlertAction.Style.default) { UIAlertAction in
- self.dismiss(animated: true, completion: nil)
- 
- self.navigationController?.popViewController(animated: true)
- 
- }
- alert.addAction(noAction)
- self.present(alert, animated: true, completion: nil)
- 
- 
- }else if self.vList[0].Model.contains("Invalid VIN") || self.vList[0].Model.contains("VIN must be 17 characters"){
- // self.isValid = false
- print("\(self.vList[0].Model)")
- let alert = UIAlertController(title: "Invaild VIN", message: "\(self.vList[0].Model)", preferredStyle: .alert)
- //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
- let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { UIAlertAction in
- self.dismiss(animated: true, completion: nil)
- }
- alert.addAction(okAction)
- self.present(alert, animated: true, completion: nil)
- }else if self.vList[0].AucStat == "ACT"{
- let alert = UIAlertController(title: "Already Checked In, NOT PRE", message: "THIS UNIT IS NOT A PREDELIVERY", preferredStyle: .alert)
- let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { UIAlertAction in
- self.dismiss(animated: true, completion: nil)
- }
- alert.addAction(okAction)
- self.present(alert, animated: true, completion: nil)
- }else{
- /*
- let lLaneLotID = lanelotID
- let lvin = self.vin
- let seldlr = dealer!.DlrID
- let yr = txtYear.text!.trimmingCharacters(in: .whitespaces)
- let make = txtMake.text!.trimmingCharacters(in: .whitespaces)
- let model = txtModel.text!.trimmingCharacters(in: .whitespaces)
- let body = btnNEWSelectBody.titleLabel!.text!
- let mileage = txtMileage.text!.trimmingCharacters(in: .whitespaces)
- let vehcolor = txtColor.text!.trimmingCharacters(in: .whitespaces)
- let vehclassid = thisVehicleClass!.VehClassID
- // let lSecID = "1"
- let sStockNo = txtStockNumber.text!
- let sComment = txtvComments.text!.trimmingCharacters(in: .whitespaces)
- var uvc = ""
- */
- //  self.isValid = true
- self.txtYear.text = self.vList[0].Yr
- self.txtMake.text = self.vList[0].Make
- self.txtModel.text = self.vList[0].Model
- self.btnNEWSelectBody.setTitle(self.vList[0].Body, for: .normal)
- self.lanelotID = self.vList[0].LaneLotID
- self.btnSelectLotLane.setTitle("Select Lane", for: .normal)
- //adds the different body types to the body table
- for v in self.vList{
- self.bodyTypes.append(v.Series)
- }
- //adds these values to the end of the list
- //self.bodyTypes.append("Enter Body Manually")
- self.bodyTypes.append("Unknown")
- if self.bodyTypes.count == 3 {
- //self.btnNEWSelectBody.titleLabel?.text = self.bodyTypes[1]
- self.btnNEWSelectBody.setTitle(self.bodyTypes[1], for: .normal)
- }
- self.tvBody.reloadData()
- }
- }
- }//end of Dispatch
- } catch let jsonErr{
- print("-------------\(jsonErr) --------------")
- self.removeSpinner()
- //self.isValid = false
- let alert = UIAlertController(title: "JSON Error:", message: "\(jsonErr)", preferredStyle: .alert)
- //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
- let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
- UIAlertAction in
- self.dismiss(animated: true, completion: nil)
- }
- alert.addAction(okAction)
- self.present(alert, animated: true, completion: nil)
- }
- self.removeSpinner()
- }
- task.resume()
- }*/
