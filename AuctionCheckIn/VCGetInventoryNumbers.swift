@@ -59,7 +59,10 @@ class VCGetInventoryNumbers: UIViewController {
         var SaleDate: String
     }
     
+    struct reservationReturn: Decodable {
+        var Status: String
     
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -459,6 +462,10 @@ extension VCGetInventoryNumbers: UITableViewDelegate, UITableViewDataSource{
             guard let data = data else { print("DATA ERROR!!!"); return }
             do{
                 DispatchQueue.main.async {
+                    
+                    
+                    //let json =
+                    
                     let alert = UIAlertController(title: "Success", message: "\(lLaneid)-\(lLotid) has been resserved", preferredStyle: .alert)
                     let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { UIAlertAction in
                         self.getReservedINVS()

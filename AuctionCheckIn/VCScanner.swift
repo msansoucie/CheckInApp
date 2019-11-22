@@ -13,6 +13,7 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
 
     var video = AVCaptureVideoPreviewLayer()
     var dealer: DealerInfoObject? = nil
+    var user: UserDataObject? = nil
     
     var count: Int = 0
     
@@ -42,7 +43,7 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         btnVehClass.titleLabel?.adjustsFontSizeToFitWidth = true
        // btnVehClass.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
         
-        print("Dealer: \(String(describing: dealer?.DlrName))")
+        print("Dealer: \(String(describing: dealer!.DlrName)), DealerID: \(dealer!.DlrID)")
         self.navigationItem.title = "Dealer: \(String(describing: dealer!.DlrName))"
         self.navigationItem.backBarButtonItem?.title = "Change Dealer"
 
@@ -184,7 +185,27 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         
         let enterAction = UIAlertAction(title: "Submit", style: .default) { (action)  in
             if let vin = self.txtEnterVIN?.text {
-                if vin == "" {
+                if vin.count == 17 || vin.count == 6{
+                    
+                    print("VIN has the required characters")
+                    self.KeepClassButtonSame()
+                    self.cameFromManual = true
+                    self.manualVIN = vin
+                                      
+                                      //self.verifyVIN(vin: vin)
+                    self.performSegue(withIdentifier: "toVCVehicle", sender: nil)
+                                     // self.present(alert, animated: true, completion: nil)
+                    
+                }else {
+                   let alert = UIAlertController(title: "Error", message: "Not the required amount of characters", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                    
+                }
+                
+                
+                /*if vin == "" {
                     print("Did not enter VIN")
                     
                 } else if vin.count != 17 {//ALLOWED FOR SOME VEHICLES THAT MAY HAVE MORE OR LESS, TESTING!!!
@@ -205,7 +226,7 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     
                     //self.verifyVIN(vin: vin)
                     self.performSegue(withIdentifier: "toVCVehicle", sender: nil)
-                }
+                }*/
             }else{
                 print("Did not enter VIN")
                 self.KeepClassButtonSame()
@@ -252,6 +273,8 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                 }
             }
             
+            vc.user = self.user
+            
             //self.navigationController?.navigationBar.topItem?.title = "Rescan"
             let backItem = UIBarButtonItem()
             backItem.title = "Rescan"
@@ -276,7 +299,34 @@ class VCScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             newV = newV.replacingOccurrences(of: "!", with: "")
             newV = newV.replacingOccurrences(of: ".", with: "")
 
+            
+            //MARK: WORKING on vin checker
+            /*if newV.count > 17 {
+                while newV.count != 17{
+                    newV.removeLast()
+                }
+            }*/
+            
+            
+            
+            /*
+             
+             var str = "12345678901234567A"
+              
+              if str.count > 17 {
+                  print(str)
+
+                  while str.count != 17{
+                      str.removeLast()
+                  }
+                  
+                  print(str)
+              }else{
+              }
+             */
+            
             let newVIN = newV
+            
             return newVIN
             
         }else{

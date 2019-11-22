@@ -29,27 +29,68 @@
     //Dispatch this task to the default queue
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
         // Instantiate connection to Zebra Bluetooth accessory
-        id<ZebraPrinterConnection, NSObject> thePrinterConn = [[MfiBtPrinterConnection alloc] initWithSerialNumber:@"XXQVJ183302076"];
+        id<ZebraPrinterConnection, NSObject> thePrinterConn1 = [[MfiBtPrinterConnection alloc] initWithSerialNumber:@"XXQVJ183302076"]; //PRINTER1
+        id<ZebraPrinterConnection, NSObject> thePrinterConn2 = [[MfiBtPrinterConnection alloc] initWithSerialNumber:@"XXQVJ183302029"]; //PRINTER2
+        id<ZebraPrinterConnection, NSObject> thePrinterConn3 = [[MfiBtPrinterConnection alloc] initWithSerialNumber:@"XXQVJ183302077"]; //PRINTER3
+        id<ZebraPrinterConnection, NSObject> thePrinterConn4 = [[MfiBtPrinterConnection alloc] initWithSerialNumber:@"XXQVJ183302079"]; //PRINTER4
+
+        
         // Open the connection - physical connection is established here.
-        BOOL success = [thePrinterConn open];
+        BOOL success1 = [thePrinterConn1 open];
+        BOOL success2 = [thePrinterConn2 open];
+        BOOL success3 = [thePrinterConn3 open];
+        BOOL success4 = [thePrinterConn4 open];
+
 
         NSString *zplData = self.label;//@"^XA^FO200,200^BY3^B3N,N,200,Y,N^FD123ABC^FS^XZ";
         //NSString *zplData1 = @"^XA^FO20,20^A0N,25,25^FDThis is a ZPL test that has been sent from the Checkin App - Matt\n/ntesting.^FS^XZ";
         
         NSError *error = nil;
         
-        success = success && [thePrinterConn write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
+        success1 = success1 && [thePrinterConn1 write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
+        
+        if (success1 != YES) {
+            success2 = success2 && [thePrinterConn2 write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
+        }
+    
+        if (success2 != YES) {
+            success3 = success3 && [thePrinterConn3 write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
+        }
+        
+        if (success3 != YES) {
+            success4 = success4 && [thePrinterConn4 write:[zplData dataUsingEncoding:NSUTF8StringEncoding] error:&error];
+        }
+        
+
         
         //Dispath GUI work back on to the main queue!
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (success != YES || error != nil) {
+            if (success1 != YES || error != nil) {
                 //[error localizedDescription]
-                UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Make sure your printer is connected with Bluetooth" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-                [errorAlert show];
+                if (success2 != YES || error != nil) {
+                    if (success3 != YES || error != nil) {
+                        if (success4 != YES || error != nil) {
+                           
+                            
+                        
+                                UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:error delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                                [errorAlert show];
+                            
+                       
+                        }
+                    }
+                }
+
             }
         });
         // Close the connection to release resources.
-        [thePrinterConn close];
+        [thePrinterConn1 close];
+        [thePrinterConn2 close];
+        [thePrinterConn3 close];
+        //[thePrinterConn4 close];
+
+
+
         //[thePrinterConn release];
     });
 }

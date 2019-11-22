@@ -14,6 +14,7 @@ class VCAdditionalPhoto: UIViewController, URLSessionDelegate, URLSessionDataDel
     var vin: String = ""
     var crORolPhoto: String = ""
     var image1: UIImage?
+    //var isBanks: Bool = false
     
     var delegate: UpdateImageProtocol?
     
@@ -48,6 +49,13 @@ class VCAdditionalPhoto: UIViewController, URLSessionDelegate, URLSessionDataDel
             }))
             self.present(alert, animated: true, completion: nil)
         }
+        
+       /* if isBanks == true {
+            let alert = UIAlertController(title: "Banks Car", message: "Take the required 11 photos for Banks", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }*/
         
         setupCaptureSession()
         setupDevice()

@@ -85,6 +85,7 @@ class VCNewPhoto: UIViewController {
         }))
         self.present(alert, animated: true, completion: nil)
     }
+    
     func Upload(myURL: String){
         let v = vin! + String(false)
         let localImageName = "NotStoredLocally\(String(describing: vin))"
@@ -185,7 +186,7 @@ class VCNewPhoto: UIViewController {
                     }
                     self.removeSpinner()
                 }else{
-                    let alert = UIAlertController(title: "ERROR", message: "That wasn't supposed to happen", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "ERROR", message: "That wasn't supposed to happen, ensure the webservice has not been altered", preferredStyle: .alert)
                            
                     let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { UIAlertAction in
                         self.dismiss(animated: true, completion: nil)

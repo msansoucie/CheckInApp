@@ -9,10 +9,13 @@
 /* Begin PBXBuildFile section */
 		2D11D24F22EF374200E51511 /* VCTakeDefaultMileagePic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D11D24E22EF374200E51511 /* VCTakeDefaultMileagePic.swift */; };
 		2D11D25122EF7EBD00E51511 /* VCViewImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D11D25022EF7EBD00E51511 /* VCViewImage.swift */; };
+		2D5200F72371CD5F000294DF /* VCBankOnlineCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5200F62371CD5F000294DF /* VCBankOnlineCamera.swift */; };
 		2D59CE78233562DC00BF9C6E /* VCGetInventoryNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D59CE77233562DC00BF9C6E /* VCGetInventoryNumbers.swift */; };
 		2D59CE7A233A6B0F00BF9C6E /* TVCInventoryLanesLots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D59CE79233A6B0F00BF9C6E /* TVCInventoryLanesLots.swift */; };
 		2D59D45C23143592004801E9 /* EquipmentObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D59D45B23143592004801E9 /* EquipmentObjects.swift */; };
 		2D59D45E23143801004801E9 /* VCEquipment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D59D45D23143801004801E9 /* VCEquipment.swift */; };
+		2D61D4502385709100C4F246 /* UserDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D61D44F2385709100C4F246 /* UserDataObject.swift */; };
+		2D61D45223858AA000C4F246 /* VCUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D61D45123858AA000C4F246 /* VCUser.swift */; };
 		2D86568B22E0ACDF00A8EA1C /* VCSelectLane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D86568A22E0ACDF00A8EA1C /* VCSelectLane.swift */; };
 		2D86568D22E0B94F00A8EA1C /* TVCSelectLane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D86568C22E0B94F00A8EA1C /* TVCSelectLane.swift */; };
 		2D8A292922AE8AA500154ED7 /* VCRegisterDealer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8A292822AE8AA500154ED7 /* VCRegisterDealer.swift */; };
@@ -31,6 +34,7 @@
 		2DC5CCA622AFD4470069C9C0 /* VCCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC5CCA522AFD4470069C9C0 /* VCCamera.swift */; };
 		2DC5CCA822AFDF630069C9C0 /* VCPhotoPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC5CCA722AFDF630069C9C0 /* VCPhotoPreview.swift */; };
 		2DC5CCAA22AFF3140069C9C0 /* TVCLaneLot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC5CCA922AFF3140069C9C0 /* TVCLaneLot.swift */; };
+		2DD842DB23720FE3004DA154 /* VCUploadBankOLPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD842DA23720FE3004DA154 /* VCUploadBankOLPhoto.swift */; };
 		2DD99B0622C3A58100ECE057 /* CheckInObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD99B0522C3A58100ECE057 /* CheckInObject.swift */; };
 		2DD99B0822C4F8EC00ECE057 /* LaneLotObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD99B0722C4F8EC00ECE057 /* LaneLotObject.swift */; };
 		2DD99B0A22C51AB500ECE057 /* VCPrintBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD99B0922C51AB500ECE057 /* VCPrintBarcode.swift */; };
@@ -66,10 +70,13 @@
 /* Begin PBXFileReference section */
 		2D11D24E22EF374200E51511 /* VCTakeDefaultMileagePic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCTakeDefaultMileagePic.swift; sourceTree = "<group>"; };
 		2D11D25022EF7EBD00E51511 /* VCViewImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCViewImage.swift; sourceTree = "<group>"; };
+		2D5200F62371CD5F000294DF /* VCBankOnlineCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCBankOnlineCamera.swift; sourceTree = "<group>"; };
 		2D59CE77233562DC00BF9C6E /* VCGetInventoryNumbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCGetInventoryNumbers.swift; sourceTree = "<group>"; };
 		2D59CE79233A6B0F00BF9C6E /* TVCInventoryLanesLots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVCInventoryLanesLots.swift; sourceTree = "<group>"; };
 		2D59D45B23143592004801E9 /* EquipmentObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentObjects.swift; sourceTree = "<group>"; };
 		2D59D45D23143801004801E9 /* VCEquipment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCEquipment.swift; sourceTree = "<group>"; };
+		2D61D44F2385709100C4F246 /* UserDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataObject.swift; sourceTree = "<group>"; };
+		2D61D45123858AA000C4F246 /* VCUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCUser.swift; sourceTree = "<group>"; };
 		2D86568A22E0ACDF00A8EA1C /* VCSelectLane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCSelectLane.swift; sourceTree = "<group>"; };
 		2D86568C22E0B94F00A8EA1C /* TVCSelectLane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVCSelectLane.swift; sourceTree = "<group>"; };
 		2D8A292822AE8AA500154ED7 /* VCRegisterDealer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCRegisterDealer.swift; sourceTree = "<group>"; };
@@ -94,6 +101,7 @@
 		2DC5CCA522AFD4470069C9C0 /* VCCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCCamera.swift; sourceTree = "<group>"; };
 		2DC5CCA722AFDF630069C9C0 /* VCPhotoPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCPhotoPreview.swift; sourceTree = "<group>"; };
 		2DC5CCA922AFF3140069C9C0 /* TVCLaneLot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVCLaneLot.swift; sourceTree = "<group>"; };
+		2DD842DA23720FE3004DA154 /* VCUploadBankOLPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCUploadBankOLPhoto.swift; sourceTree = "<group>"; };
 		2DD99B0522C3A58100ECE057 /* CheckInObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInObject.swift; sourceTree = "<group>"; };
 		2DD99B0722C4F8EC00ECE057 /* LaneLotObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaneLotObject.swift; sourceTree = "<group>"; };
 		2DD99B0922C51AB500ECE057 /* VCPrintBarcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCPrintBarcode.swift; sourceTree = "<group>"; };
@@ -161,6 +169,8 @@
 		2D94A8DF22AA883A00DC0150 /* AuctionCheckIn */ = {
 			isa = PBXGroup;
 			children = (
+				2D61D44F2385709100C4F246 /* UserDataObject.swift */,
+				2D61D45123858AA000C4F246 /* VCUser.swift */,
 				2DEE676823576D080099B92A /* VCEditVIN6.swift */,
 				2DEE67662355F92C0099B92A /* VCNewPhoto.swift */,
 				2DEE6764235109280099B92A /* VCAdditionalPhoto.swift */,
@@ -198,6 +208,8 @@
 				2D94A8E922AA883A00DC0150 /* LaunchScreen.storyboard */,
 				2D94A8EC22AA883A00DC0150 /* Info.plist */,
 				2DEB185322CA431700DB5E7C /* AuctionCheckIn-Bridging-Header.h */,
+				2D5200F62371CD5F000294DF /* VCBankOnlineCamera.swift */,
+				2DD842DA23720FE3004DA154 /* VCUploadBankOLPhoto.swift */,
 			);
 			path = AuctionCheckIn;
 			sourceTree = "<group>";
@@ -363,6 +375,7 @@
 				2DC5CCA622AFD4470069C9C0 /* VCCamera.swift in Sources */,
 				2DF2D64A22B156A60021281D /* DealerInfoObject.swift in Sources */,
 				2DEE67672355F92C0099B92A /* VCNewPhoto.swift in Sources */,
+				2D61D4502385709100C4F246 /* UserDataObject.swift in Sources */,
 				2D94A91122AAE74500DC0150 /* VCScanner.swift in Sources */,
 				2D94A8E322AA883A00DC0150 /* VCFindDealer.swift in Sources */,
 				2D8A292922AE8AA500154ED7 /* VCRegisterDealer.swift in Sources */,
@@ -374,7 +387,9 @@
 				2DEE676923576D080099B92A /* VCEditVIN6.swift in Sources */,
 				2DD99B0822C4F8EC00ECE057 /* LaneLotObject.swift in Sources */,
 				2DC5CCA822AFDF630069C9C0 /* VCPhotoPreview.swift in Sources */,
+				2D5200F72371CD5F000294DF /* VCBankOnlineCamera.swift in Sources */,
 				2D59D45C23143592004801E9 /* EquipmentObjects.swift in Sources */,
+				2D61D45223858AA000C4F246 /* VCUser.swift in Sources */,
 				2DF608BB22BD1D05008A1B2E /* VehicleClassObject.swift in Sources */,
 				2DC5CCAA22AFF3140069C9C0 /* TVCLaneLot.swift in Sources */,
 				2DD99B0A22C51AB500ECE057 /* VCPrintBarcode.swift in Sources */,
@@ -382,6 +397,7 @@
 				2D59D45E23143801004801E9 /* VCEquipment.swift in Sources */,
 				2DEB185B22CCD7D000DB5E7C /* CustomeObject.m in Sources */,
 				2D11D24F22EF374200E51511 /* VCTakeDefaultMileagePic.swift in Sources */,
+				2DD842DB23720FE3004DA154 /* VCUploadBankOLPhoto.swift in Sources */,
 				2DE2006723144ECA00FAADF0 /* VCEquipmentTypes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -469,9 +485,11 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 79QR2B78MA;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -530,9 +548,11 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 79QR2B78MA;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -558,6 +578,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 79QR2B78MA;
 				HEADER_SEARCH_PATHS = /Applications/link_os_sdk/iOS/v1.5.1049/lib/include;
@@ -572,6 +593,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = matt.AuctionCheckIn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "AuctionCheckIn/AuctionCheckIn-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -584,6 +606,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 79QR2B78MA;
 				HEADER_SEARCH_PATHS = /Applications/link_os_sdk/iOS/v1.5.1049/lib/include;
@@ -598,6 +621,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = matt.AuctionCheckIn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "AuctionCheckIn/AuctionCheckIn-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;

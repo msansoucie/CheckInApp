@@ -1,19 +1,16 @@
 //
-//  VCTakeDefaultMileagePic.swift
+//  VCBankOnlineCamera.swift
 //  AuctionCheckIn
 //
-//  Created by Matthew Sansoucie on 7/29/19.
+//  Created by Matthew Sansoucie on 11/5/19.
 //  Copyright © 2019 Matthew Sansoucie. All rights reserved.
 //
 
 import UIKit
 import AVFoundation
 
+class VCBankOnlineCamera: UIViewController, URLSessionDelegate, URLSessionDataDelegate {
 
-class VCTakeDefaultMileagePic: UIViewController, URLSessionDelegate, URLSessionDataDelegate {
-    
-    var delegate: UpdateImageProtocol?
-    
     var captureSession = AVCaptureSession()
     var backCamera: AVCaptureDevice?
     var frontCamera: AVCaptureDevice?
@@ -27,9 +24,10 @@ class VCTakeDefaultMileagePic: UIViewController, URLSessionDelegate, URLSessionD
     var cameraPreviewLayer: AVCaptureVideoPreviewLayer?
     
     var image: UIImage?
+    var vin: String = ""
     
-    var defaultOrMileage: String = ""
-
+    var counter11 = 0
+    
     @IBOutlet weak var btnPhoto: UIButton!
     
     override func viewDidLoad() {
@@ -37,13 +35,8 @@ class VCTakeDefaultMileagePic: UIViewController, URLSessionDelegate, URLSessionD
         
         btnPhoto.layer.cornerRadius = 0.5 * btnPhoto.bounds.size.width
         
-        print(defaultOrMileage)
+        //navigationItem.title = "Submit Bank OL Photos"
         
-        self.navigationItem.title = "\(defaultOrMileage) Photo"
-
-        //navigationController?.navigationBar.isUserInteractionEnabled = false
-        //navigationController?.navigationBar.tintColor = UIColor.lightGray
-
         setupCaptureSession()
         setupDevice()
         setupInputOutput()
@@ -51,27 +44,22 @@ class VCTakeDefaultMileagePic: UIViewController, URLSessionDelegate, URLSessionD
         startRunningCapturSession()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        setCameraOrientation()
-    }
-
     @IBAction func takePhoto(_ sender: Any) {
         let settings = AVCapturePhotoSettings()
         photoOutput?.capturePhoto(with: settings, delegate: self)
     }
     
-    //send iumage back to UIimageView in parent VC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-       /* if segue.identifier == "toPhoto"{
-            let vc = segue.destination as! VCPhotoPreview
-            vc.myImage = image
-            
-            //TRYING TO SAVE MEMORY SPACE
-            image = nil
-        }*/
+        if segue.identifier == "takeBankPhoto" {
+            let backItem = UIBarButtonItem()
+            backItem.title = "Back"
+            navigationItem.backBarButtonItem = backItem
+            let vc = segue.destination as! VCUploadBankOLPhoto
+            vc.image = self.image
+            vc.vin = self.vin
+        }
     }
-    
+
     func rotateImage(image:UIImage) -> UIImage {
         var rotatedImage = UIImage()
         switch image.imageOrientation
@@ -93,66 +81,51 @@ class VCTakeDefaultMileagePic: UIViewController, URLSessionDelegate, URLSessionD
 
 }
 
-extension VCTakeDefaultMileagePic: AVCapturePhotoCaptureDelegate {
-    
-    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-        if let imageData = photo.fileDataRepresentation(){
-    
-            //print(imageData)
-            image = UIImage(data: imageData)
-            
-            //makes sure the image is rotated right
-            if (image!.imageOrientation.rawValue == cameraPreviewLayer!.connection!.videoOrientation.rawValue)
-            {
-                image = rotateImage(image: image!)
-            }
-            
-            if defaultOrMileage == "Default"{
-                delegate?.getDefault(image: image!)
-            }else if defaultOrMileage == "Mileage" {
-                delegate?.getMileage(image: image!)
-            }else if defaultOrMileage == "LeftRear"{
-                delegate?.getLeftRear(image: image!)
-            }else if defaultOrMileage == "RightRear" {
-                delegate?.getRightRear(image: image!)
-            }else if defaultOrMileage == "RightFront"{
-                delegate?.getRightFront(image: image!)
-            }else{
-                let alert = UIAlertController(title: "Internal Error", message: "Cannot Idenetify Image Type, Please take in for service", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Close", style: .default, handler: { action in
-                    self.navigationController?.popViewController(animated: true)
-                }))
-                self.present(alert, animated: true, completion: nil)
-            }
-            image = nil
-            navigationController?.popViewController(animated: true)
-            
-            //performSegue(withIdentifier: "toPhoto", sender: nil)
-            
-            // items.append(image!)
-            //myCollectionView.reloadData()
-            //performSegue(withIdentifier: "showPhoto_Segue", sender: nil)
-        }
-    }
-    
+extension VCBankOnlineCamera: AVCapturePhotoCaptureDelegate{
+ 
+     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+         if let imageData = photo.fileDataRepresentation(){
+     
+             //print(imageData)
+             image = UIImage(data: imageData)
+             
+             //makes sure the image is rotated right
+             if (image!.imageOrientation.rawValue == cameraPreviewLayer!.connection!.videoOrientation.rawValue)
+             {
+                 image = rotateImage(image: image!)
+             }
+             
+             /*if defaultOrMileage == "Default"{
+                 delegate?.getDefault(image: image!)
+             }else{
+                 delegate?.getMileage(image: image!)
+             }*/
+             image = nil
+             navigationController?.popViewController(animated: true)
+             
+             performSegue(withIdentifier: "takeBankPhoto", sender: nil)
+         }
+     }
+     
     func setupCaptureSession(){
         captureSession.sessionPreset = AVCaptureSession.Preset.photo
     }
     
-    func setupDevice(){
-        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera], mediaType: AVMediaType.video, position: AVCaptureDevice.Position.unspecified)
-        let devices = deviceDiscoverySession.devices
-        
-        for device in devices {
-            if device.position == AVCaptureDevice.Position.back {
-                backCamera = device
-            }else if device.position == AVCaptureDevice.Position.front {
-                frontCamera = device
-            }
-        }
-        currentCamera = backCamera
-    }
     
+     func setupDevice(){
+         let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera], mediaType: AVMediaType.video, position: AVCaptureDevice.Position.unspecified)
+         let devices = deviceDiscoverySession.devices
+         
+         for device in devices {
+             if device.position == AVCaptureDevice.Position.back {
+                 backCamera = device
+             }else if device.position == AVCaptureDevice.Position.front {
+                 frontCamera = device
+             }
+         }
+         currentCamera = backCamera
+     }
+     
     func setupInputOutput(){
         do {
             let captureDeviceInput = try AVCaptureDeviceInput(device: currentCamera!)
@@ -192,7 +165,7 @@ extension VCTakeDefaultMileagePic: AVCapturePhotoCaptureDelegate {
             if previewLayerConnection.isVideoOrientationSupported {
                 let o: AVCaptureVideoOrientation
                 switch (orientation) {
-                    case .portrait: o = .landscapeRight             //.portrait             MODIFIED SO ITS ONLY IN LANDSCAPE
+                    case .portrait: o = .landscapeRight             //.portrait  MODIFIED SO ITS ONLY IN LANDSCAPE
                     case .landscapeRight: o = .landscapeLeft        // .landscapeLeft
                     case .landscapeLeft: o = .landscapeRight        //.landscapeRight
                     case .portraitUpsideDown: o = .landscapeRight   //.portraitUpsideDown
@@ -204,13 +177,10 @@ extension VCTakeDefaultMileagePic: AVCapturePhotoCaptureDelegate {
             }
         }
     }
-    
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator)
-    {
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         setCameraOrientation()
     }
-    
     
 }

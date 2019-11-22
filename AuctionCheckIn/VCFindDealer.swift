@@ -8,7 +8,15 @@
 
 import UIKit
 
-class VCFindDealer: UIViewController { //, UITableViewDelegate, UITableViewDataSource {
+protocol getUserDataProtocol {
+    func getUD(u: UserDataObject)
+}
+
+class VCFindDealer: UIViewController, getUserDataProtocol {
+    func getUD(u: UserDataObject) {
+        self.user = u
+    }
+    //, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tvSearchBar: UISearchBar!
     @IBOutlet weak var myTableView: UITableView!
@@ -27,27 +35,38 @@ class VCFindDealer: UIViewController { //, UITableViewDelegate, UITableViewDataS
         var ResCount: String
         var InSale: String
         var InInv: String
+        var dlrReconFlag: String
     }
-    
     
     var dealerArray = [DealerInfoObject]()
     var searchArray = [DealerInfoObject]()
     
     var myVin6: String = ""
     
+    var user: UserDataObject? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
         
        //MARK: Add To avoid dealer selection
-        let last6 = UIBarButtonItem(title: "VIN6", style: .done, target: self, action: #selector(enterExistingVin))
+       /* let last6 = UIBarButtonItem(title: "VIN6", style: .done, target: self, action: #selector(enterExistingVin))
         self.navigationItem.rightBarButtonItem = last6
-        navigationItem.rightBarButtonItem?.isEnabled = false
-        
+        navigationItem.rightBarButtonItem?.isEnabled = true*/
         getDealers()
         myTableView.reloadData()
+        
+        user = UserDataObject(secID: "1", FullName: "JohnS")
+        //getUserName()
     }
+    
+    
 
+    
+    
+    func getUserName() {
+        performSegue(withIdentifier: "toGetUser", sender: nil)
+    }
     
     @objc func enterExistingVin(){
         let alert = UIAlertController(title: "VIN", message: "Enter Last 6 of Existing VIN", preferredStyle: .alert)
@@ -60,7 +79,6 @@ class VCFindDealer: UIViewController { //, UITableViewDelegate, UITableViewDataS
         
         let enterAction = UIAlertAction(title: "Enter", style: .default) { (action) in
             let vin6 = self.txtVIN6!.text
-            
             
             if vin6 == "" {
                 print("Empty")
@@ -124,12 +142,16 @@ class VCFindDealer: UIViewController { //, UITableViewDelegate, UITableViewDataS
                         print("No Dealers Found")
                     }else{
                         var count = 0
+                        
                         for p in t.vl{
-                            let del = DealerInfoObject(DlrID: p.DlrID, DlrName: p.DlrName, DlrLocation: p.DlrLocation, ResCount: p.ResCount, InSale: p.InSale, InInv:  p.InInv)
+                            let del = DealerInfoObject(DlrID: p.DlrID, DlrName: p.DlrName, DlrLocation: p.DlrLocation, ResCount: p.ResCount, InSale: p.InSale, InInv:  p.InInv, dlrReconFlag: p.dlrReconFlag)
                             self.dealerArray.append(del)
                                 //print("\(count): \(del.DlrName)\t\t ResCount: \(del.ResCount) \t\tInSale: \(del.InSale) \t\tInInv: \(del.InInv)")
                             count = count + 1
                         }
+                        
+                        print(self.dealerArray.count)
+                        
                         self.searchArray = self.dealerArray
                         self.myTableView.reloadData()
                     }
@@ -162,7 +184,7 @@ extension VCFindDealer: UISearchBarDelegate {
             return
         }
         searchArray = dealerArray.filter({(item: DealerInfoObject) -> Bool in 
-            item.DlrName.lowercased().starts(with: searchText.lowercased())
+            item.DlrName.lowercased().starts(with: searchText.lowercased()) || item.DlrID.lowercased().starts(with: searchText.lowercased())
         })
         myTableView.reloadData()
     }
@@ -176,36 +198,46 @@ extension VCFindDealer: UISearchBarDelegate {
 extension VCFindDealer: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
         return searchArray.count
+        
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = myTableView.dequeueReusableCell(withIdentifier: "cell") as! TVCDealer
-        cell.lblDealerName.text = searchArray[indexPath.row].DlrName
+        cell.lblDealerName.text = "<\(searchArray[indexPath.row].DlrID)> " + searchArray[indexPath.row].DlrName
     
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        selectedIndex = indexPath.row
-        print(self.dealerArray[indexPath.row].DlrID)
+       if user == nil {
+            performSegue(withIdentifier: "toGetUser", sender: nil)
+        }else{
+            selectedIndex = indexPath.row
+            print(self.dealerArray[indexPath.row].DlrID)
+            
+            performSegue(withIdentifier: "toVCScanner", sender: nil)
+        }
         
-        performSegue(withIdentifier: "toVCScanner", sender: nil)
+
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toVCScanner" {
             let vc = segue.destination as! VCScanner
             vc.dealer = searchArray[selectedIndex]
-        }
-        
-        if segue.identifier == "existingVIN" {
+            vc.user = self.user
+        }else if segue.identifier == "existingVIN" {
             let backItem = UIBarButtonItem()
             backItem.title = "Back"
             navigationItem.backBarButtonItem = backItem
             let vc = segue.destination as! VCEditVIN6
             vc.vin6 = myVin6
+        }else if segue.identifier == "toGetUser"{
+            let vc = segue.destination as! VCUser
+            vc.delegate = self
         }
     }
 
