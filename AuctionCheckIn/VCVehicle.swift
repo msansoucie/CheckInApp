@@ -56,6 +56,8 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
     @IBOutlet weak var btnTrans: UIButton!
     @IBOutlet weak var btnRadio: UIButton!
     
+    
+    //MARK: Trans Radio Variables
     var transCode: String = "0"
     var radioCode: String = "0"
     
@@ -84,6 +86,10 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
         var LotID: String
         var StockNumber: String
         //var LOCATION: String
+        
+        //MARK: radioTrans edits 12/02/2019
+        var lTrans: String
+        var lRadio: String
     }
     
     struct ReservedLotsLanes: Decodable {
@@ -273,6 +279,18 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
         print("\(vin)")
         vintextbox.text = vin
         
+        
+        
+        /*if user?.SecID == nil {
+            let alert = UIAlertController(title: "No UserID Found", message: "UserID is nil, proceeding to main page", preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                self.navigationController?.popToRootViewController(animated: true)
+            }))
+            present(alert, animated: true, completion: nil)
+        }*/
+        print("Hello \(user!.FullName), id: <\(user!.SecID)>")
+        
         print(dealer!.DlrName)
         print(dealer!.dlrReconFlag)
         
@@ -360,7 +378,12 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
                         print("\(f.EQCode), \(f.EQGroup), \(f.EQDesc)")
                     }
                     
+                    
                     self.fixMyError()
+                    
+                    //MARK: Does not work here!!!
+                    //self.addTransRadioValues(tCode: self.transCode, rCode: self.radioCode)
+                    
                     self.removeSpinner()
                 }
                 
@@ -374,6 +397,9 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
         }
         task.resume()
        // self.removeSpinner()
+        
+        
+        
         
     }
     
@@ -407,12 +433,10 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
              print("wash")
         default:
             scReconSelection.selectedSegmentIndex = 0
-            let alert = UIAlertController(title: "Unknown Recon Flag", message: "Dealer has a recon flag of <\(dealer!.dlrReconFlag)>, cannot predetermine Recon type and must be set manually", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Unknown Recon Flag", message: "Dealer has a unknown recon flag value of <\(dealer!.dlrReconFlag)>, cannot predetermine recon type, must be set manually", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
             }))
-            
             present(alert, animated: true, completion: nil)
-
         }
         
     }
@@ -739,6 +763,9 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
          //MARK: Recon Request, if 0 no else yes
         let recon = scReconSelection.selectedSegmentIndex //added recon request
         
+        let tc = transCode
+        let rc = radioCode
+        
         for v in vList{
             if body == v.Series{
                 uvc = v.UVC
@@ -751,7 +778,7 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
             let alert = UIAlertController(title: "Update", message: "This will update the existing cars", preferredStyle: .alert)
             let OKAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
                 UIAlertAction in
-                let updateURL: String = "https://mobile.aane.com/auction.asmx/updateVehiclesPRE?lAucID=\(self.aucid)&lLaneLotID=\(lLaneLotID)&seldlr=\(seldlr)&Yr=\(self.forURLs(s:yr))&make=\(self.forURLs(s:make))&model=\(self.forURLs(s:model))&body=\(self.forURLs(s:body))&mileage=\(self.forURLs(s:mileage))&vehcolor=\(self.forURLs(s:vehcolor))&vehclassid=\(vehclassid)&lSecID=\(lSecID)&sStockNO=\(self.forURLs(s:sStockNo))&sComment=\(self.forURLs(s:sComment))&UVC=\("TEMP")&reconRequest=\(recon)"
+                let updateURL: String = "https://mobile.aane.com/auction.asmx/updateVehiclesPRE?lAucID=\(self.aucid)&lLaneLotID=\(lLaneLotID)&seldlr=\(seldlr)&Yr=\(self.forURLs(s:yr))&make=\(self.forURLs(s:make))&model=\(self.forURLs(s:model))&body=\(self.forURLs(s:body))&mileage=\(self.forURLs(s:mileage))&vehcolor=\(self.forURLs(s:vehcolor))&vehclassid=\(vehclassid)&lSecID=\(lSecID)&sStockNO=\(self.forURLs(s:sStockNo))&sComment=\(self.forURLs(s:sComment))&UVC=\("TEMP")&reconRequest=\(recon)"//&lTransCode=\(tc)&lRadioCode=\(rc)"
                 print(updateURL)
                 self.updateVehicle(todoEndpoint: updateURL)
                 self.dismiss(animated: true, completion: nil)
@@ -767,7 +794,7 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
         else{ //Is not on property, A NEW CAR
             showSpinner(onView: self.view)
             
-            let todoEndpoint: String = "https://mobile.aane.com/auction.asmx/CheckInVehicleMobile?lAucID=\(aucid)&lLaneLotID=\(lLaneLotID)&VIN=\(lvin)&seldlr=\(seldlr)&yr=\(forURLs(s:yr))&make=\(forURLs(s:make))&model=\(forURLs(s:model))&body=\(forURLs(s:body))&mileage=\(forURLs(s:mileage))&vehcolor=\(forURLs(s:vehcolor))&vehclassid=\(vehclassid)&lSecID=\(lSecID)&sStockNO=\(sStockNo)&sComment=\(forURLs(s:sComment))&UVC=\(uvc)&reconRequest=\(recon)"
+            let todoEndpoint: String = "https://mobile.aane.com/auction.asmx/CheckInVehicleMobile?lAucID=\(aucid)&lLaneLotID=\(lLaneLotID)&VIN=\(lvin)&seldlr=\(seldlr)&yr=\(forURLs(s:yr))&make=\(forURLs(s:make))&model=\(forURLs(s:model))&body=\(forURLs(s:body))&mileage=\(forURLs(s:mileage))&vehcolor=\(forURLs(s:vehcolor))&vehclassid=\(vehclassid)&lSecID=\(lSecID)&sStockNO=\(sStockNo)&sComment=\(forURLs(s:sComment))&UVC=\(uvc)&reconRequest=\(recon)"//&lTransCode=\(tc)&lRadioCode=\(rc)"
             
             print("Here is the URL: \(todoEndpoint)")
             
@@ -917,6 +944,34 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
     }
     
     
+    //MARK: ADDS THE TRANSMISSION AND RADIO CODE!
+    func addTransRadioValues(tCode: String, rCode: String){
+        
+        print("tCode is <\(tCode)>, rCode is \(rCode)")
+        for f in self.equipmentList{
+            print("Equipment: id<\(f.id)>, desc<\(f.EQDesc)>, group<\(f.EQGroup)>")
+           
+        }
+        
+        if tCode != "0"{
+            for eq in self.equipmentList {
+                if eq.id == tCode{
+                    self.btnTrans.setTitle(eq.EQDesc, for: .normal)
+                    print("Again, the code for Transmission: \(tCode)")
+                }
+            }
+        }
+        if rCode != "0"{
+            for eq in self.equipmentList {
+                if eq.id == rCode{
+                    self.btnRadio.setTitle(eq.EQDesc, for: .normal)
+                    print("Again, the code for Radio: \(rCode)")
+                }
+            }
+        }
+        
+    }
+    
     //MARK DECODE THE VIN
     func verifyVIN(vin: String){
         showSpinner(onView: self.view)
@@ -972,6 +1027,7 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
                                 //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
                                 let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { UIAlertAction in
                                     self.dismiss(animated: true, completion: nil)
+                                    //MARK: May want to remove this due to decoding issues
                                     self.navigationController?.popViewController(animated: true)
                                     
                                 }
@@ -1001,7 +1057,7 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
                                 //", Location:\(v.LOCATION)")
                                 //print("--------- Coming From Call ---------")
                                 
-                                let vel = DecodedVINObject(ID: v.ID, VID: v.VID, Make: v.Make, Model: v.Model, Series: v.Series, Yr: v.Yr, UVC: v.UVC, AucStat: v.AucStat, Mileage: v.Mileage, VehColor: v.VehColor, Body: v.Body, LaneLotID: v.LaneLotID, LaneID: v.LaneID, LotID: v.LotID, StockNumber: v.StockNumber)//, LOCATION: v.LOCATION)//DecodedVINObject(ID: v.ID, VID: v.VID, Make: v.Make, Model: v.Model, Series: v.Series, Yr: v.Yr, UVC: v.UVC,)
+                                let vel = DecodedVINObject(ID: v.ID, VID: v.VID, Make: v.Make, Model: v.Model, Series: v.Series, Yr: v.Yr, UVC: v.UVC, AucStat: v.AucStat, Mileage: v.Mileage, VehColor: v.VehColor, Body: v.Body, LaneLotID: v.LaneLotID, LaneID: v.LaneID, LotID: v.LotID, StockNumber: v.StockNumber, lTrans: v.lTrans, lRadio: v.lRadio)//, LOCATION: v.LOCATION)//DecodedVINObject(ID: v.ID, VID: v.VID, Make: v.Make, Model: v.Model, Series: v.Series, Yr: v.Yr, UVC: v.UVC,)
                                 //print("\(vel.Make), \(vel.Make), \(vel.Model), \(vel.UVC)")
                                 self.vList.append(vel)
                             }
@@ -1017,6 +1073,13 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
                                 //alert.view.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2) )
                                 let okAction = UIAlertAction(title: "Yes", style: UIAlertAction.Style.default) { UIAlertAction in
                                     self.dismiss(animated: true, completion: nil)
+                                    
+                                    //MARK: SET TRANS & RADIO CODE 1(ON PROPERTY), also setting Buttons here!!!!!!!!
+                                    self.transCode = self.vList[0].lTrans
+                                    self.radioCode = self.vList[0].lRadio
+                                    print("Transcod: \( self.transCode), RadioCode: \(self.radioCode)")
+                                    self.addTransRadioValues(tCode: self.transCode, rCode: self.radioCode)
+
                                     
                                     self.ISONPROPERITY = true
                                     self.aucid = self.vList[0].ID.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -1097,6 +1160,11 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
                                 
                             }else{//This is for new vehicles
                                 
+                                //MARK: SET TRANS & RADIO CODE 2 (NEW VEHICLES won't have value predetermined)
+                                self.transCode = "0"//self.vList[0].lTrans (SHOLUD BE 0 IF A NEW CAR)
+                                self.radioCode = "0"//self.vList[0].lRadio
+                                print("Transcod: \( self.transCode), RadioCode: \(self.radioCode)")
+                                
                                 self.txtYear.text = self.vList[0].Yr
                                 self.txtMake.text = self.vList[0].Make
                                 self.txtModel.text = self.vList[0].Model
@@ -1106,6 +1174,7 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
                                 self.lanelotID = self.vList[0].LaneLotID
                                 
                                 self.btnSelectLotLane.setTitle("Select Lane", for: .normal)
+                                
                                 
                                 
                                 //adds the different body types to the body table
@@ -1240,7 +1309,7 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
         let y = txtYear.text
         let m = txtMileage.text
         
-        //create the lable in ZPL http://labelary.com/viewer.html
+        //create the lable in ZPL format http://labelary.com/viewer.html
         instanceOfCustomeObject.label = "^XA ^FWR ^FO250,20 ^GB550,1180,4^FS    ^FO500,400 ^A0,200,200^FD\(y!)^FS     ^FO300,250 ^A0,200,200^FD\(Int(m!)?.delimiter ?? m!) MI^FS ^FO100,300 ^BY3 ^BCR,100,N,N,N ^FD\(vin)^FS    ^FO35,400 ^A0R,0,50 ^FD\(vin)^FS  ^XZ"
         
         /*

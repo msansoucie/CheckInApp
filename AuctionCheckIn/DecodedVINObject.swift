@@ -9,7 +9,7 @@
 import Foundation
 
 class DecodedVINObject {
-    init(ID: String, VID: String, Make: String, Model: String, Series: String, Yr: String, UVC: String, AucStat: String, Mileage: String, VehColor: String, Body: String, LaneLotID: String, LaneID: String, LotID: String, StockNumber: String) {  //LOCATION: String) {
+    init(ID: String, VID: String, Make: String, Model: String, Series: String, Yr: String, UVC: String, AucStat: String, Mileage: String, VehColor: String, Body: String, LaneLotID: String, LaneID: String, LotID: String, StockNumber: String, lTrans: String, lRadio: String) {  //LOCATION: String) {
         self.ID = ID
         self.VID = VID
         self.Make = Make
@@ -27,6 +27,10 @@ class DecodedVINObject {
         self.LotID = LotID
         self.StockNumber = StockNumber
        // self.LOCATION = LOCATION
+        
+        //MARK: transradio edits!
+        self.lTrans = lTrans
+        self.lRadio = lRadio
     }
     
     
@@ -48,7 +52,8 @@ class DecodedVINObject {
     var StockNumber: String
    // var LOCATION: String
     
-    
+    var lTrans: String
+    var lRadio: String
 
     
 }

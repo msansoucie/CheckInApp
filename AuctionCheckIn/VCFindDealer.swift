@@ -56,8 +56,7 @@ class VCFindDealer: UIViewController, getUserDataProtocol {
         getDealers()
         myTableView.reloadData()
         
-        user = UserDataObject(secID: "1", FullName: "JohnS")
-        //getUserName()
+        getUserName()
     }
     
     

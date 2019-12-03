@@ -13,14 +13,15 @@ class VCUser: UIViewController {
     @IBOutlet weak var txtOne: UITextField!
     @IBOutlet weak var txtTwo: UITextField!
     @IBOutlet weak var btnButton: UIButton!
+    @IBOutlet weak var lblError: UILabel!
     
     var user: UserDataObject? = nil
     var delegate: getUserDataProtocol?
     
-    struct returnUser:Decodable {
-        let u: [vl]
+    struct returnUser: Decodable {
+        let vl:[u]
     }
-    struct vl: Decodable {
+    struct u: Decodable {
         var SecID: String
         var FullName: String
     }
@@ -40,9 +41,9 @@ class VCUser: UIViewController {
         
 
         if txtOne.text != "" && txtTwo.text != "" {
-            //getSecID()
+            getSecID()
         }
-        self.dismiss(animated: true, completion: nil)
+        
         
     }
     
@@ -50,11 +51,10 @@ class VCUser: UIViewController {
     
     func getSecID(){
         showSpinner(onView: self.view)
-        let todoEndpoint: String = forURLs(s: "https://mobile.aane.com/auction.asmx/GetSecID?requestStr=\(txtOne.text!)&requestStr1=\(txtTwo.text!)")
-        
+        let todoEndpoint: String = forURLs(s: "https://mobile.aane.com/auction.asmx/GetSecID?requestStr=\(txtOne.text!)&requesStr1=\(txtTwo.text!)")
         
         guard let url = URL(string: todoEndpoint) else {
-            self.removeSpinner()
+           // self.removeSpinner()
             print("ERROR: cannot create URL")
             self.alertMessages(title: "Error", message: "Failed to create URL")
             return
@@ -77,21 +77,30 @@ class VCUser: UIViewController {
             guard let data = data else {
                 self.removeSpinner()
                 print("DATA ERROR!!!")
+                self.lblError.isHidden = false
                 self.alertMessages(title: "Data Error", message: "Could not convert data to valid JSON")
                 return
             }
             do {
                 let newUser = try JSONDecoder().decode(returnUser.self, from: data)
-                
+                self.removeSpinner()
                 DispatchQueue.main.async {
-                    if newUser.u.count != 1 {
+                    if newUser.vl.count != 1 {
                         self.alertMessages(title: "Error", message: "Did not pull the data correctly")
+                        print("too big")
+                        self.lblError.isHidden = false
+
                     }else{
-                        if newUser.u[0].SecID == "0" && newUser.u[0].FullName == "N/A" {
-                            self.alertMessages(title: "Invalid User", message: "Ensure the username and password are entered correctly")
+                        if newUser.vl[0].SecID == "0" && newUser.vl[0].FullName == "N/A" {
+                            self.alertMessages(title: "Invalid User", message: "Ensure username and password are correct")
+                            //print("bad credentials")
+                            self.lblError.isHidden = false
+
                         }else{
-                            self.user = UserDataObject(secID: newUser.u[0].SecID, FullName: newUser.u[0].FullName)
+                            self.user = UserDataObject(secID: newUser.vl[0].SecID, FullName: newUser.vl[0].FullName)
                             self.delegate?.getUD(u: self.user!)
+                            print("Good")
+                            self.lblError.isHidden = true
                             self.dismiss(animated: true, completion: nil)
                         }
                     }
@@ -100,6 +109,8 @@ class VCUser: UIViewController {
             }catch let jsonErr{
                 self.removeSpinner()
                 self.alertMessages(title: "JSON Error", message: "\(jsonErr)")
+                self.lblError.isHidden = false
+                print("Error: \(jsonErr)")
             }
         }
         task.resume()
