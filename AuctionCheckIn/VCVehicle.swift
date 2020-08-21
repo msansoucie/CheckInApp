@@ -339,6 +339,13 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
         
     }
     
+    @IBAction func printEquipValues(_ sender: Any) {
+        
+        print("trans code: <\(transCode)>")
+        print("radio code: <\(radioCode)>")
+
+        
+    }
     
     //Equipment Section
     func getEquipment(){
@@ -778,7 +785,7 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
             let alert = UIAlertController(title: "Update", message: "This will update the existing cars", preferredStyle: .alert)
             let OKAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
                 UIAlertAction in
-                let updateURL: String = "https://mobile.aane.com/auction.asmx/updateVehiclesPRE?lAucID=\(self.aucid)&lLaneLotID=\(lLaneLotID)&seldlr=\(seldlr)&Yr=\(self.forURLs(s:yr))&make=\(self.forURLs(s:make))&model=\(self.forURLs(s:model))&body=\(self.forURLs(s:body))&mileage=\(self.forURLs(s:mileage))&vehcolor=\(self.forURLs(s:vehcolor))&vehclassid=\(vehclassid)&lSecID=\(lSecID)&sStockNO=\(self.forURLs(s:sStockNo))&sComment=\(self.forURLs(s:sComment))&UVC=\("TEMP")&reconRequest=\(recon)"//&lTransCode=\(tc)&lRadioCode=\(rc)"
+                let updateURL: String = "https://mobile.aane.com/auction.asmx/updateVehiclesPRE?lAucID=\(self.aucid)&lLaneLotID=\(lLaneLotID)&seldlr=\(seldlr)&Yr=\(self.forURLs(s:yr))&make=\(self.forURLs(s:make))&model=\(self.forURLs(s:model))&body=\(self.forURLs(s:body))&mileage=\(self.forURLs(s:mileage))&vehcolor=\(self.forURLs(s:vehcolor))&vehclassid=\(vehclassid)&lSecID=\(lSecID)&sStockNO=\(self.forURLs(s:sStockNo))&sComment=\(self.forURLs(s:sComment))&UVC=\("TEMP")&reconRequest=\(recon)&lTransCode=\(tc)&lRadioCode=\(rc)" //MARK: Added transmission and radio code(UPDATE)
                 print(updateURL)
                 self.updateVehicle(todoEndpoint: updateURL)
                 self.dismiss(animated: true, completion: nil)
@@ -794,7 +801,7 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
         else{ //Is not on property, A NEW CAR
             showSpinner(onView: self.view)
             
-            let todoEndpoint: String = "https://mobile.aane.com/auction.asmx/CheckInVehicleMobile?lAucID=\(aucid)&lLaneLotID=\(lLaneLotID)&VIN=\(lvin)&seldlr=\(seldlr)&yr=\(forURLs(s:yr))&make=\(forURLs(s:make))&model=\(forURLs(s:model))&body=\(forURLs(s:body))&mileage=\(forURLs(s:mileage))&vehcolor=\(forURLs(s:vehcolor))&vehclassid=\(vehclassid)&lSecID=\(lSecID)&sStockNO=\(sStockNo)&sComment=\(forURLs(s:sComment))&UVC=\(uvc)&reconRequest=\(recon)"//&lTransCode=\(tc)&lRadioCode=\(rc)"
+            let todoEndpoint: String = "https://mobile.aane.com/auction.asmx/CheckInVehicleMobile?lAucID=\(aucid)&lLaneLotID=\(lLaneLotID)&VIN=\(lvin)&seldlr=\(seldlr)&yr=\(forURLs(s:yr))&make=\(forURLs(s:make))&model=\(forURLs(s:model))&body=\(forURLs(s:body))&mileage=\(forURLs(s:mileage))&vehcolor=\(forURLs(s:vehcolor))&vehclassid=\(vehclassid)&lSecID=\(lSecID)&sStockNO=\(sStockNo)&sComment=\(forURLs(s:sComment))&UVC=\(uvc)&reconRequest=\(recon)&lTransCode=\(tc)&lRadioCode=\(rc)" //MARK: Added transmission and radio code(SAVE)
             
             print("Here is the URL: \(todoEndpoint)")
             
@@ -902,7 +909,6 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
                     //MARK: ImageSend (UPDATE) Negated here if needed
                     
                     
-                    
                     if !r.Status.contains("update successful") {
                         let alert = UIAlertController(title: "Error", message: "\(r.Status)", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
@@ -950,7 +956,6 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
         print("tCode is <\(tCode)>, rCode is \(rCode)")
         for f in self.equipmentList{
             print("Equipment: id<\(f.id)>, desc<\(f.EQDesc)>, group<\(f.EQGroup)>")
-           
         }
         
         if tCode != "0"{
@@ -1163,7 +1168,7 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
                                 //MARK: SET TRANS & RADIO CODE 2 (NEW VEHICLES won't have value predetermined)
                                 self.transCode = "0"//self.vList[0].lTrans (SHOLUD BE 0 IF A NEW CAR)
                                 self.radioCode = "0"//self.vList[0].lRadio
-                                print("Transcod: \( self.transCode), RadioCode: \(self.radioCode)")
+                                print("Transcode: \( self.transCode), RadioCode: \(self.radioCode)")
                                 
                                 self.txtYear.text = self.vList[0].Yr
                                 self.txtMake.text = self.vList[0].Make
@@ -1281,7 +1286,6 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
         }
         
     }
-    
     @IBAction func SelectLane(_ sender: Any) {
         if tvLaneLot.isHidden{
             //if laneLots.isEmpty{
@@ -1404,7 +1408,7 @@ class VCVehicle: UIViewController, UpdateImageProtocol, getEquipmentTypeAndName 
             let vc = segue.destination as! VCEquipmentTypes
             let backItem = UIBarButtonItem()
             backItem.title = "Back"
-            
+            navigationItem.backBarButtonItem = backItem
             vc.delegate = self
             vc.equipment = self.equ
             vc.selectedEquipmentList = selectedList
@@ -1777,6 +1781,8 @@ extension VCVehicle: UITableViewDelegate, UITableViewDataSource{
     }
     
     
+    
+    //MARK: Sends each photo of the vehicle
     func doOdom(){
         if mileageImage != nil { //UIIVMileage.image
             self.uploadImage(DorOPhoto: self.mileageImage!, isDefault: false)

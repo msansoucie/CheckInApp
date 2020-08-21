@@ -580,7 +580,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 79QR2B78MA;
+				DEVELOPMENT_TEAM = 7DHWKB9BN6;
 				HEADER_SEARCH_PATHS = /Applications/link_os_sdk/iOS/v1.5.1049/lib/include;
 				INFOPLIST_FILE = AuctionCheckIn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -591,7 +591,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = matt.AuctionCheckIn;
+				PRODUCT_BUNDLE_IDENTIFIER = AuctionCheckIn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "AuctionCheckIn/AuctionCheckIn-Bridging-Header.h";
@@ -608,7 +608,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 79QR2B78MA;
+				DEVELOPMENT_TEAM = 7DHWKB9BN6;
 				HEADER_SEARCH_PATHS = /Applications/link_os_sdk/iOS/v1.5.1049/lib/include;
 				INFOPLIST_FILE = AuctionCheckIn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -619,7 +619,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = matt.AuctionCheckIn;
+				PRODUCT_BUNDLE_IDENTIFIER = AuctionCheckIn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "AuctionCheckIn/AuctionCheckIn-Bridging-Header.h";

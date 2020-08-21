@@ -60,9 +60,6 @@ class VCFindDealer: UIViewController, getUserDataProtocol {
     }
     
     
-
-    
-    
     func getUserName() {
         performSegue(withIdentifier: "toGetUser", sender: nil)
     }
