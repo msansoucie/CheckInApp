@@ -111,6 +111,8 @@ class VCFindDealer: UIViewController, getUserDataProtocol {
             self.removeSpinner()
             return
         }
+        
+        
             
         var urlRequest = URLRequest(url: url)
             
